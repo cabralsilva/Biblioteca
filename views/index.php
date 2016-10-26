@@ -311,7 +311,6 @@
 							this.setAttribute("data-next", next);
 							if (next > 100){
 								$(this).addClass("disabled");
-// 								$("#last-page").addClass("disabled");
 							}
 						}else if($(this).data("firs") != undefined){
 							$(this).removeClass("disabled");
@@ -423,6 +422,18 @@
 				}
 			}
 		}
+
+		$(document).ready(function(){
+			console.log("iniciou");
+			function search(){
+				$.ajax({
+					url: "demo_test.txt", 
+					success: function(result){
+			        	$("#div1").html(result);
+			    	}
+		    	});
+			}
+		});
 	</script>
 </body>
 </html>
