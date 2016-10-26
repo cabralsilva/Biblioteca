@@ -21,3 +21,74 @@ thead{
 	background-color: #e5e5e5 !important;
 }
 
+.middle{
+	vertical-align: middle !important;
+}
+
+.center{
+	text-align: center !important;
+}
+
+.margin20{
+	margin: 20px 0px;
+}
+
+.image25{
+	font-size: 25px;
+}
+.image15{
+	font-size: 15px;
+}
+
+.center-vertical{
+	position: absolute;
+    top: 50%;
+    left: 50%;
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+    margin: 0px 15px;
+    
+}
+.center-vertical-texto{
+	position: absolute;
+    top: 50%;
+/*     left: 50%; */
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+    margin: 0px 15px;
+}
+
+.center-vertical-right{
+	position: absolute;
+    top: 50%;
+/*     left: 50%; */
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+    margin: 0px 15px;
+    right: 0%;
+}
+
+.center-vertical-span{
+	position: absolute;
+    top: 50%;
+/*     left: 50%; */
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+    margin: 0px 15px;
+    right: 0%;
+}
+
+.paginacao{
+    margin: 0px -15px 0px -15px;
+}
+.pagination{
+	margin: 0px;
+}
+.indices{
+	margin: 0px -15px 0px -15px;
+}
+
