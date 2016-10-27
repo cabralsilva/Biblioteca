@@ -11,33 +11,101 @@
 <link rel="stylesheet" href="../resources/css/style.css">
 <script src="../resources/bootstrap-3.3.7-dist/js/jquery-3.1.1.min.js"></script>
 <script src="../resources/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-
+<script
+	src="../resources/bootstrap-3.3.7-dist/js/bootstrap-waitingfor.js"></script>
 
 </head>
 <body>
 	<div class="container">
+		<form class="form-inline">
+			<div class="row text-center">
+				<label for="tipo">Tipo</label> <select class="form-control">
+					<option>Todos</option>
+					<option>Obra Especial</option>
+					<option>TCC</option>
+					<option>Tese</option>
+					<option>Atlas</option>
+					<option>Livros especiais</option>
+					<option>Coletânea de artigos</option>
+					<option>Monografias</option>
+					<option>Teses de dissertações</option>
+					<option>Apostila</option>
+					<option>Obra rara</option>
+					<option>Periódico</option>
+					<option>Livro</option>
+				</select> <label for="campo">Campo</label> <select
+					class="form-control">
+					<option>Todos</option>
+					<option>Titulo</option>
+					<option>Autor</option>
+					<option>Editora</option>
+					<option>Área</option>
+					<option>Assunto</option>
+				</select> <label for="idioma">Idioma</label> <select
+					class="form-control">
+					<option>Todos</option>
+					<option>Grego</option>
+					<option>Polonês</option>
+					<option>Russo</option>
+					<option>Alemão</option>
+					<option>Latim</option>
+					<option>Francês</option>
+					<option>Ucraniano</option>
+					<option>Ingês</option>
+					<option>Italiano</option>
+					<option>Espanhol</option>
+					<option>Português</option>
+				</select> <br />
+				<br />
+				<div class="text-center">
+					<input class="form-control" style="width: 50%;" placeholder="O que procura?" id="ex3"
+						type="text">
+					<button type="submit" class="btn btn-default">Pesquisar</button>
+				</div>
+			</div>
+
+		</form>
+		<hr />
 		<div class="row paginacao">
 			<div class="col-xs-12 col-md-12 col-sm-12 text-center">
 				<nav aria-label="Page navigation">
 					<ul class="pagination">
-						<li onclick="changePage(this)" data-firs="0" class="disabled previous" id="first-page"><a href="javascript:void(0)"><span aria-hidden="true">&larr;</span> Primeiro</a></li>
-    					<li onclick="changePage(this)" data-prev="0" class="disabled" id="previous-page"><a href="javascript:void(0)" aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a></li>
-						<li onclick="changePage(this)" data-page="1" class="active"><a href="javascript:void(0)">1</a></li>
-						<li onclick="changePage(this)" data-page="2"><a href="javascript:void(0)">2</a></li>
-						<li onclick="changePage(this)" data-page="3"><a href="javascript:void(0)">3</a></li>
-						<li onclick="changePage(this)" data-page="4"><a href="javascript:void(0)">4</a></li>
-						<li onclick="changePage(this)" data-page="5"><a href="javascript:void(0)">5</a></li>
-						<li onclick="changePage(this)" data-next="6" id="next-page"><a href="javascript:void(0)" aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-						<li onclick="changePage(this)" data-last="100" class="next" id="last-page"><a href="javascript:void(0)">Último <span aria-hidden="true">&rarr;</span></a></li>
+						<li onclick="changePage(this)" data-firs="0"
+							class="disabled previous" id="first-page"><a
+							href="javascript:void(0)"><span aria-hidden="true">&larr;</span>
+								Primeiro</a></li>
+						<li onclick="changePage(this)" data-prev="0" class="disabled"
+							id="previous-page"><a href="javascript:void(0)"
+							aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a></li>
+						<li onclick="changePage(this)" data-page="1" class="active"><a
+							href="javascript:void(0)">1</a></li>
+						<li onclick="changePage(this)" data-page="2"><a
+							href="javascript:void(0)">2</a></li>
+						<li onclick="changePage(this)" data-page="3"><a
+							href="javascript:void(0)">3</a></li>
+						<li onclick="changePage(this)" data-page="4"><a
+							href="javascript:void(0)">4</a></li>
+						<li onclick="changePage(this)" data-page="5"><a
+							href="javascript:void(0)">5</a></li>
+						<li onclick="changePage(this)" data-next="6" id="next-page"><a
+							href="javascript:void(0)" aria-label="Next"> <span
+								aria-hidden="true">&raquo;</span>
+								<li onclick="changePage(this)" data-last="100" class="next"
+								id="last-page"><a href="javascript:void(0)">Último <span
+										aria-hidden="true">&rarr;</span></a></li>
 						</a></li>
 					</ul>
 				</nav>
 			</div>
 		</div>
+		<div class="progress hidden">
+			<div class="progress-bar progress-bar-striped active"
+				role="progressbar" aria-valuenow="40" aria-valuemin="0"
+				aria-valuemax="100" style="width: 100%">Carregando...</div>
+		</div>
 		<div class="row indices">
-			<div class="col-xs-12 col-md-12 col-sm-12 text-center">
-				Exibindo de 1 a 25 de 123 acervos encontrados
-			</div>
+			<div class="col-xs-12 col-md-12 col-sm-12 text-center">Exibindo de 1
+				a 25 de 123 acervos encontrados</div>
 		</div>
 		<div class="row">
 			<table id="datatable-result" class="table table-hover">
@@ -45,11 +113,10 @@
 					<tr>
 						<th width="2%" class="middle"><input id="123" class="checkAll"
 							type="checkbox" onchange="toggleCheckboxAll(this)" /></th>
-						<th width="10%">
-							<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>0 item(ns)
-						</th>
-						<th width="80%" class="center">Acervo <span class="glyphicon glyphicon-book"
-							aria-hidden="true"></span></th>
+						<th width="10%"><span class="glyphicon glyphicon-list-alt"
+							aria-hidden="true"></span>0 item(ns)</th>
+						<th width="80%" class="center">Acervo <span
+							class="glyphicon glyphicon-book" aria-hidden="true"></span></th>
 						<th width="10%"></th>
 						<th width="5%"></th>
 					</tr>
@@ -58,192 +125,192 @@
 					<tr>
 						<td class="middle"><input id="123" class="check" type="checkbox"
 							onchange="toggleCheckbox(this)" /></td>
-						<td colspan="3"><b style="color: 0e4924;">Casa grande e senzala - formação da
-								família brasileira sob o regime da economia patriarcal</b> - <b>Livro</b>
-							- acervo - 5168<br> FREYRE, Gilberto <b>Casa grande e senzala
+						<td colspan="3"><b style="color: 0e4924;">Casa grande e senzala -
 								formação da família brasileira sob o regime da economia
-								patriarcal</b>. 36ed. São Paulo: Record, . 569p.<br> Número de
-							Chamada: 981 F894c</td>
+								patriarcal</b> - <b>Livro</b> - acervo - 5168<br> FREYRE,
+							Gilberto <b>Casa grande e senzala formação da família brasileira
+								sob o regime da economia patriarcal</b>. 36ed. São Paulo:
+							Record, . 569p.<br> Número de Chamada: 981 F894c</td>
 						<td class="middle"><span class="glyphicon glyphicon-search"
 							aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<td class="middle"><input id="123" class="check" type="checkbox"
 							onchange="toggleCheckbox(this)" /></td>
-						<td colspan="3"><b style="color: 0e4924;">Casa grande e senzala - formação da
-								família brasileira sob o regime da economia patriarcal</b> - <b>Livro</b>
-							- acervo - 5168<br> FREYRE, Gilberto <b>Casa grande e senzala
+						<td colspan="3"><b style="color: 0e4924;">Casa grande e senzala -
 								formação da família brasileira sob o regime da economia
-								patriarcal</b>. 36ed. São Paulo: Record, . 569p.<br> Número de
-							Chamada: 981 F894c</td>
+								patriarcal</b> - <b>Livro</b> - acervo - 5168<br> FREYRE,
+							Gilberto <b>Casa grande e senzala formação da família brasileira
+								sob o regime da economia patriarcal</b>. 36ed. São Paulo:
+							Record, . 569p.<br> Número de Chamada: 981 F894c</td>
 						<td class="middle"><span class="glyphicon glyphicon-search"
 							aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<td class="middle"><input id="123" class="check" type="checkbox"
 							onchange="toggleCheckbox(this)" /></td>
-						<td colspan="3"><b style="color: 0e4924;">Casa grande e senzala - formação da
-								família brasileira sob o regime da economia patriarcal</b> - <b>Livro</b>
-							- acervo - 5168<br> FREYRE, Gilberto <b>Casa grande e senzala
+						<td colspan="3"><b style="color: 0e4924;">Casa grande e senzala -
 								formação da família brasileira sob o regime da economia
-								patriarcal</b>. 36ed. São Paulo: Record, . 569p.<br> Número de
-							Chamada: 981 F894c</td>
+								patriarcal</b> - <b>Livro</b> - acervo - 5168<br> FREYRE,
+							Gilberto <b>Casa grande e senzala formação da família brasileira
+								sob o regime da economia patriarcal</b>. 36ed. São Paulo:
+							Record, . 569p.<br> Número de Chamada: 981 F894c</td>
 						<td class="middle"><span class="glyphicon glyphicon-search"
 							aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<td class="middle"><input id="123" class="check" type="checkbox"
 							onchange="toggleCheckbox(this)" /></td>
-						<td colspan="3"><b style="color: 0e4924;">Casa grande e senzala - formação da
-								família brasileira sob o regime da economia patriarcal</b> - <b>Livro</b>
-							- acervo - 5168<br> FREYRE, Gilberto <b>Casa grande e senzala
+						<td colspan="3"><b style="color: 0e4924;">Casa grande e senzala -
 								formação da família brasileira sob o regime da economia
-								patriarcal</b>. 36ed. São Paulo: Record, . 569p.<br> Número de
-							Chamada: 981 F894c</td>
+								patriarcal</b> - <b>Livro</b> - acervo - 5168<br> FREYRE,
+							Gilberto <b>Casa grande e senzala formação da família brasileira
+								sob o regime da economia patriarcal</b>. 36ed. São Paulo:
+							Record, . 569p.<br> Número de Chamada: 981 F894c</td>
 						<td class="middle"><span class="glyphicon glyphicon-search"
 							aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<td class="middle"><input id="123" class="check" type="checkbox"
 							onchange="toggleCheckbox(this)" /></td>
-						<td colspan="3"><b style="color: 0e4924;">Casa grande e senzala - formação da
-								família brasileira sob o regime da economia patriarcal</b> - <b>Livro</b>
-							- acervo - 5168<br> FREYRE, Gilberto <b>Casa grande e senzala
+						<td colspan="3"><b style="color: 0e4924;">Casa grande e senzala -
 								formação da família brasileira sob o regime da economia
-								patriarcal</b>. 36ed. São Paulo: Record, . 569p.<br> Número de
-							Chamada: 981 F894c</td>
+								patriarcal</b> - <b>Livro</b> - acervo - 5168<br> FREYRE,
+							Gilberto <b>Casa grande e senzala formação da família brasileira
+								sob o regime da economia patriarcal</b>. 36ed. São Paulo:
+							Record, . 569p.<br> Número de Chamada: 981 F894c</td>
 						<td class="middle"><span class="glyphicon glyphicon-search"
 							aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<td class="middle"><input id="123" class="check" type="checkbox"
 							onchange="toggleCheckbox(this)" /></td>
-						<td colspan="3"><b style="color: 0e4924;">Casa grande e senzala - formação da
-								família brasileira sob o regime da economia patriarcal</b> - <b>Livro</b>
-							- acervo - 5168<br> FREYRE, Gilberto <b>Casa grande e senzala
+						<td colspan="3"><b style="color: 0e4924;">Casa grande e senzala -
 								formação da família brasileira sob o regime da economia
-								patriarcal</b>. 36ed. São Paulo: Record, . 569p.<br> Número de
-							Chamada: 981 F894c</td>
+								patriarcal</b> - <b>Livro</b> - acervo - 5168<br> FREYRE,
+							Gilberto <b>Casa grande e senzala formação da família brasileira
+								sob o regime da economia patriarcal</b>. 36ed. São Paulo:
+							Record, . 569p.<br> Número de Chamada: 981 F894c</td>
 						<td class="middle"><span class="glyphicon glyphicon-search"
 							aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<td class="middle"><input id="123" class="check" type="checkbox"
 							onchange="toggleCheckbox(this)" /></td>
-						<td colspan="3"><b style="color: 0e4924;">Casa grande e senzala - formação da
-								família brasileira sob o regime da economia patriarcal</b> - <b>Livro</b>
-							- acervo - 5168<br> FREYRE, Gilberto <b>Casa grande e senzala
+						<td colspan="3"><b style="color: 0e4924;">Casa grande e senzala -
 								formação da família brasileira sob o regime da economia
-								patriarcal</b>. 36ed. São Paulo: Record, . 569p.<br> Número de
-							Chamada: 981 F894c</td>
+								patriarcal</b> - <b>Livro</b> - acervo - 5168<br> FREYRE,
+							Gilberto <b>Casa grande e senzala formação da família brasileira
+								sob o regime da economia patriarcal</b>. 36ed. São Paulo:
+							Record, . 569p.<br> Número de Chamada: 981 F894c</td>
 						<td class="middle"><span class="glyphicon glyphicon-search"
 							aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<td class="middle"><input id="123" class="check" type="checkbox"
 							onchange="toggleCheckbox(this)" /></td>
-						<td colspan="3"><b style="color: 0e4924;">Casa grande e senzala - formação da
-								família brasileira sob o regime da economia patriarcal</b> - <b>Livro</b>
-							- acervo - 5168<br> FREYRE, Gilberto <b>Casa grande e senzala
+						<td colspan="3"><b style="color: 0e4924;">Casa grande e senzala -
 								formação da família brasileira sob o regime da economia
-								patriarcal</b>. 36ed. São Paulo: Record, . 569p.<br> Número de
-							Chamada: 981 F894c</td>
+								patriarcal</b> - <b>Livro</b> - acervo - 5168<br> FREYRE,
+							Gilberto <b>Casa grande e senzala formação da família brasileira
+								sob o regime da economia patriarcal</b>. 36ed. São Paulo:
+							Record, . 569p.<br> Número de Chamada: 981 F894c</td>
 						<td class="middle"><span class="glyphicon glyphicon-search"
 							aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<td class="middle"><input id="123" class="check" type="checkbox"
 							onchange="toggleCheckbox(this)" /></td>
-						<td colspan="3"><b style="color: 0e4924;">Casa grande e senzala - formação da
-								família brasileira sob o regime da economia patriarcal</b> - <b>Livro</b>
-							- acervo - 5168<br> FREYRE, Gilberto <b>Casa grande e senzala
+						<td colspan="3"><b style="color: 0e4924;">Casa grande e senzala -
 								formação da família brasileira sob o regime da economia
-								patriarcal</b>. 36ed. São Paulo: Record, . 569p.<br> Número de
-							Chamada: 981 F894c</td>
+								patriarcal</b> - <b>Livro</b> - acervo - 5168<br> FREYRE,
+							Gilberto <b>Casa grande e senzala formação da família brasileira
+								sob o regime da economia patriarcal</b>. 36ed. São Paulo:
+							Record, . 569p.<br> Número de Chamada: 981 F894c</td>
 						<td class="middle"><span class="glyphicon glyphicon-search"
 							aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<td class="middle"><input id="123" class="check" type="checkbox"
 							onchange="toggleCheckbox(this)" /></td>
-						<td colspan="3"><b style="color: 0e4924;">Casa grande e senzala - formação da
-								família brasileira sob o regime da economia patriarcal</b> - <b>Livro</b>
-							- acervo - 5168<br> FREYRE, Gilberto <b>Casa grande e senzala
+						<td colspan="3"><b style="color: 0e4924;">Casa grande e senzala -
 								formação da família brasileira sob o regime da economia
-								patriarcal</b>. 36ed. São Paulo: Record, . 569p.<br> Número de
-							Chamada: 981 F894c</td>
+								patriarcal</b> - <b>Livro</b> - acervo - 5168<br> FREYRE,
+							Gilberto <b>Casa grande e senzala formação da família brasileira
+								sob o regime da economia patriarcal</b>. 36ed. São Paulo:
+							Record, . 569p.<br> Número de Chamada: 981 F894c</td>
 						<td class="middle"><span class="glyphicon glyphicon-search"
 							aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<td class="middle"><input id="123" class="check" type="checkbox"
 							onchange="toggleCheckbox(this)" /></td>
-						<td colspan="3"><b style="color: 0e4924;">Casa grande e senzala - formação da
-								família brasileira sob o regime da economia patriarcal</b> - <b>Livro</b>
-							- acervo - 5168<br> FREYRE, Gilberto <b>Casa grande e senzala
+						<td colspan="3"><b style="color: 0e4924;">Casa grande e senzala -
 								formação da família brasileira sob o regime da economia
-								patriarcal</b>. 36ed. São Paulo: Record, . 569p.<br> Número de
-							Chamada: 981 F894c</td>
+								patriarcal</b> - <b>Livro</b> - acervo - 5168<br> FREYRE,
+							Gilberto <b>Casa grande e senzala formação da família brasileira
+								sob o regime da economia patriarcal</b>. 36ed. São Paulo:
+							Record, . 569p.<br> Número de Chamada: 981 F894c</td>
 						<td class="middle"><span class="glyphicon glyphicon-search"
 							aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<td class="middle"><input id="123" class="check" type="checkbox"
 							onchange="toggleCheckbox(this)" /></td>
-						<td colspan="3"><b style="color: 0e4924;">Casa grande e senzala - formação da
-								família brasileira sob o regime da economia patriarcal</b> - <b>Livro</b>
-							- acervo - 5168<br> FREYRE, Gilberto <b>Casa grande e senzala
+						<td colspan="3"><b style="color: 0e4924;">Casa grande e senzala -
 								formação da família brasileira sob o regime da economia
-								patriarcal</b>. 36ed. São Paulo: Record, . 569p.<br> Número de
-							Chamada: 981 F894c</td>
+								patriarcal</b> - <b>Livro</b> - acervo - 5168<br> FREYRE,
+							Gilberto <b>Casa grande e senzala formação da família brasileira
+								sob o regime da economia patriarcal</b>. 36ed. São Paulo:
+							Record, . 569p.<br> Número de Chamada: 981 F894c</td>
 						<td class="middle"><span class="glyphicon glyphicon-search"
 							aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<td class="middle"><input id="123" class="check" type="checkbox"
 							onchange="toggleCheckbox(this)" /></td>
-						<td colspan="3"><b style="color: 0e4924;">Casa grande e senzala - formação da
-								família brasileira sob o regime da economia patriarcal</b> - <b>Livro</b>
-							- acervo - 5168<br> FREYRE, Gilberto <b>Casa grande e senzala
+						<td colspan="3"><b style="color: 0e4924;">Casa grande e senzala -
 								formação da família brasileira sob o regime da economia
-								patriarcal</b>. 36ed. São Paulo: Record, . 569p.<br> Número de
-							Chamada: 981 F894c</td>
+								patriarcal</b> - <b>Livro</b> - acervo - 5168<br> FREYRE,
+							Gilberto <b>Casa grande e senzala formação da família brasileira
+								sob o regime da economia patriarcal</b>. 36ed. São Paulo:
+							Record, . 569p.<br> Número de Chamada: 981 F894c</td>
 						<td class="middle"><span class="glyphicon glyphicon-search"
 							aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<td class="middle"><input id="123" class="check" type="checkbox"
 							onchange="toggleCheckbox(this)" /></td>
-						<td colspan="3"><b style="color: 0e4924;">Casa grande e senzala - formação da
-								família brasileira sob o regime da economia patriarcal</b> - <b>Livro</b>
-							- acervo - 5168<br> FREYRE, Gilberto <b>Casa grande e senzala
+						<td colspan="3"><b style="color: 0e4924;">Casa grande e senzala -
 								formação da família brasileira sob o regime da economia
-								patriarcal</b>. 36ed. São Paulo: Record, . 569p.<br> Número de
-							Chamada: 981 F894c</td>
+								patriarcal</b> - <b>Livro</b> - acervo - 5168<br> FREYRE,
+							Gilberto <b>Casa grande e senzala formação da família brasileira
+								sob o regime da economia patriarcal</b>. 36ed. São Paulo:
+							Record, . 569p.<br> Número de Chamada: 981 F894c</td>
 						<td class="middle"><span class="glyphicon glyphicon-search"
 							aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<td class="middle"><input id="123" class="check" type="checkbox"
 							onchange="toggleCheckbox(this)" /></td>
-						<td colspan="3"><b style="color: 0e4924;">Casa grande e senzala - formação da
-								família brasileira sob o regime da economia patriarcal</b> - <b>Livro</b>
-							- acervo - 5168<br> FREYRE, Gilberto <b>Casa grande e senzala
+						<td colspan="3"><b style="color: 0e4924;">Casa grande e senzala -
 								formação da família brasileira sob o regime da economia
-								patriarcal</b>. 36ed. São Paulo: Record, . 569p.<br> Número de
-							Chamada: 981 F894c</td>
+								patriarcal</b> - <b>Livro</b> - acervo - 5168<br> FREYRE,
+							Gilberto <b>Casa grande e senzala formação da família brasileira
+								sob o regime da economia patriarcal</b>. 36ed. São Paulo:
+							Record, . 569p.<br> Número de Chamada: 981 F894c</td>
 						<td class="middle"><span class="glyphicon glyphicon-search"
 							aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<td class="middle"><input id="123" class="check" type="checkbox"
 							onchange="toggleCheckbox(this)" /></td>
-						<td colspan="3"><b style="color: 0e4924;">Casa grande e senzala - formação da
-								família brasileira sob o regime da economia patriarcal</b> - <b>Livro</b>
-							- acervo - 5168<br> FREYRE, Gilberto <b>Casa grande e senzala
+						<td colspan="3"><b style="color: 0e4924;">Casa grande e senzala -
 								formação da família brasileira sob o regime da economia
-								patriarcal</b>. 36ed. São Paulo: Record, . 569p.<br> Número de
-							Chamada: 981 F894c</td>
+								patriarcal</b> - <b>Livro</b> - acervo - 5168<br> FREYRE,
+							Gilberto <b>Casa grande e senzala formação da família brasileira
+								sob o regime da economia patriarcal</b>. 36ed. São Paulo:
+							Record, . 569p.<br> Número de Chamada: 981 F894c</td>
 						<td class="middle"><span class="glyphicon glyphicon-search"
 							aria-hidden="true"></span></td>
 					</tr>
@@ -425,14 +492,16 @@
 
 		$(document).ready(function(){
 			console.log("iniciou");
-			function search(){
 				$.ajax({
-					url: "demo_test.txt", 
+					url: "../controller/busca.php", 
+					beforeSend: function() {
+						$(".progress").removeClass("hidden");
+				  	},
 					success: function(result){
-			        	$("#div1").html(result);
+			        	console.log(result);
+			        	$(".progress").addClass("hidden");
 			    	}
 		    	});
-			}
 		});
 	</script>
 </body>

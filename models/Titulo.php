@@ -20,9 +20,9 @@ class Titulo{
 	private $data;
 	private $serie;
 	private $numeroClasse;
-	private $autorTitulo = new Autor();
+	private $autorTitulo;
 	private $autorNumero;
-	private $editoraTitulo = new Editora();
+	private $editoraTitulo;
 	private $numeroVolume;
 	private $referencia;
 	private $tomo;
@@ -31,8 +31,8 @@ class Titulo{
 	private $quantidadeAssunto;
 	private $quantidadeAutoresSecundarios;
 	private $quantidadeExemplares;
-	private $idiomaTitulo = new Idioma();
-	private $tipoTitulo = new TipoTitulo();
+	private $idiomaTitulo;
+	private $tipoTitulo;
 	private $textoPesquisa;
 	private $periodicidade;
 	private $lstAssunto = array();
@@ -40,10 +40,14 @@ class Titulo{
 	private $lstAutores = array();
 	
 	//VARIÁVEL UTILIZADA EXCLUSIVAMENTO PARA PESQUISA
-	private $campo = new Campo();
+	private $campo;
 	
 	function __construct(){
-		echo "Executanto construtor";
+		$this->autorTitulo = new Autor();
+		$this->editoraTitulo = new Editora();
+		$this->idiomaTitulo = new Idioma();
+		$this->tipoTitulo = new TipoTitulo();
+		$this->campo = new Campo();
 	}
 	
 	public function getCodigo() {
