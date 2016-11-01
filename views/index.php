@@ -25,7 +25,7 @@
 					<option value="0" selected="selected">Todos</option>
 					<?php
 					
-foreach ( $_SESSION ["lstTipoTitulo"] as $value ) {
+					foreach ( $_SESSION ["lstTipoTitulo"] as $value ) {
 						echo "<option value=\"" . $value ["Codigo"] . "\">" . $value ["Nome"] . "</option>";
 					}
 					?>
@@ -42,24 +42,25 @@ foreach ( $_SESSION ["lstTipoTitulo"] as $value ) {
 					<option value="0" selected="selected">Todos</option>
 					<?php
 					
-foreach ( $_SESSION ["lstIdiomas"] as $value ) {
+					foreach ( $_SESSION ["lstIdiomas"] as $value ) {
 						echo "<option value=\"" . $value ["Codigo"] . "\">" . $value ["Nome"] . "</option>";
 					}
 					?>
-				</select> <br /> <br />
-				<div class="text-center">
-					<input minlength=3 required
-						onkeydown="if (event.keyCode == 13) {document.frm-pesquisa.submit(); return false;}"
-						class="form-control" style="width: 50%;"
-						placeholder="O que procura?" id="texto" type="text">
-					<!--					<button onclick="searchTitulo()" type="button"-->
-					<!-- 						class="btn btn-default">Pesquisar</button> -->
-					<button type="submit" class="btn btn-default">Pesquisar</button>
-				</div>
+				</select>
 			</div>
-
+			<div class="row text-center">
+				<input minlength=3 required
+					onkeydown="if (event.keyCode == 13) {document.frm-pesquisa.submit(); return false;}"
+					class="form-control" placeholder="O que procura?" id="texto"
+					type="text">
+				<button type="submit" class="btn btn-default">Pesquisar</button>
+			</div>
 		</form>
+		<div class="row impressao hide">
+			<div id="infobusca" class="alert alert-info text-center" role="alert"></div>
+		</div>
 		<hr />
+
 		<div class="row paginacao">
 			<div class="col-xs-12 col-md-12 col-sm-12 text-center">
 				<nav aria-label="Page navigation">
@@ -86,49 +87,30 @@ foreach ( $_SESSION ["lstIdiomas"] as $value ) {
 			</div>
 		</div>
 
-		<div class="row indices">
+		<div class="row indices impressao">
 			<div class="col-xs-12 col-md-12 col-sm-12 text-center" id="indices"></div>
 		</div>
-		<div class="row">
+		<div class="row impressao" id="tabela">
 			<table id="datatable-result" class="table table-hover">
 				<thead>
 					<tr>
-						<th width="2%" class="middle"><input id="123" class="checkAll"
-							type="checkbox" onchange="toggleCheckboxAll(this)" /></th>
-						<th width="10%"><span class="glyphicon glyphicon-list-alt"
-							aria-hidden="true"></span>0 item(ns)</th>
-						<th width="80%" class="center">Acervo <span
+						<th width="2%" class="middle"><input id="123"
+							class="checkAll noimpression" type="checkbox"
+							onchange="toggleCheckboxAll(this)" /></th>
+						<th width="10%"><span
+							class="glyphicon glyphicon-list-alt noimpression"
+							aria-hidden="true"></span> <span id="totalMinhaLista"
+							class="noimpression">0</span> <span class="noimpression">item(ns)</span></th>
+						<th width="80%" class="center">Acervos <span
 							class="glyphicon glyphicon-book" aria-hidden="true"></span></th>
-						<th width="10%"></th>
+						<th width="10%"><button type="button"
+								class="btn btn-default noimpression" onclick="imprimirTabela()">
+								<span class="glyphicon glyphicon-print"></span> Imprimir
+							</button></th>
 						<th width="5%"></th>
 					</tr>
 				</thead>
 				<tbody id="bodyResult">
-
-					<!-- 					<tr> -->
-					<!-- 						<td class="middle"><input id="123" class="check" type="checkbox" -->
-					<!-- 							onchange="toggleCheckbox(this)" /></td> -->
-					<!--						<td colspan="3"><b style="color: 0e4924;">Casa grande e senzala -
-<!-- 								formação da família brasileira sob o regime da economia -->
-					<!-- 								patriarcal</b> - <b>Livro</b> - acervo - 5168<br> FREYRE, -->
-					<!-- 							Gilberto <b>Casa grande e senzala formação da família brasileira -->
-					<!-- 								sob o regime da economia patriarcal</b>. 36ed. São Paulo: -->
-					<!-- 							Record, . 569p.<br> Número de Chamada: 981 F894c</td> -->
-					<!-- 						<td class="middle"><span class="glyphicon glyphicon-search" -->
-					<!-- 							aria-hidden="true"></span></td> -->
-					<!-- 					</tr> -->
-					<!-- 					<tr> -->
-					<!-- 						<td class="middle"><input id="123" class="check" type="checkbox" -->
-					<!-- 							onchange="toggleCheckbox(this)" /></td> -->
-					<!--						<td colspan="3"><b style="color: 0e4924;">Casa grande e senzala -
-<!-- 								formação da família brasileira sob o regime da economia -->
-					<!-- 								patriarcal</b> - <b>Livro</b> - acervo - 5168<br> FREYRE, -->
-					<!-- 							Gilberto <b>Casa grande e senzala formação da família brasileira -->
-					<!-- 								sob o regime da economia patriarcal</b>. 36ed. São Paulo: -->
-					<!-- 							Record, . 569p.<br> Número de Chamada: 981 F894c</td> -->
-					<!-- 						<td class="middle"><span class="glyphicon glyphicon-search" -->
-					<!-- 							aria-hidden="true"></span></td> -->
-					<!-- 					</tr> -->
 				</tbody>
 			</table>
 			<div class="progress hidden">
@@ -154,22 +136,57 @@ foreach ( $_SESSION ["lstIdiomas"] as $value ) {
 		function getLast(){
 			return totalRegistos;
 		}
-		function marcarLinha(parent){
-			$(parent).removeClass("linha");
-			$(parent).addClass("linha-marcada");
+		function marcarLinha(parent, element){
+			$.ajax({
+				url: "../controller/indexcontroller.php", 
+				async: false,
+				type: "POST",
+				data:{
+					tipo: "addMinhaLista",
+					codigoAcervo: $(element).attr("id")
+				},
+				success: function(success){
+					var objJson = JSON.parse(success);
+					var minhaLista = [];
+					for(var i in objJson)
+						minhaLista.push([i, objJson [i]]);
+					$(parent).removeClass("linha");
+					$(parent).addClass("linha-marcada");
+					var span = document.getElementById("totalMinhaLista");
+					span.innerText = minhaLista.length;
+		    	}
+	    	});
+	    	
 		}
-		function desmarcarLinha(parent){
-			$(parent).removeClass("linha-marcada");
-			$(parent).addClass("linha");
-			$(".checkAll").prop("checked", false);
+		function desmarcarLinha(parent, element){
+			$.ajax({
+				url: "../controller/indexcontroller.php", 
+				async: false,
+				type: "POST",
+				data:{
+					tipo: "removeMinhaLista",
+					codigoAcervo: $(element).attr("id")
+				},
+				success: function(success){
+					var objJson = JSON.parse(success);
+					var minhaLista = [];
+					for(var i in objJson)
+						minhaLista.push([i, objJson [i]]);
+					$(parent).removeClass("linha-marcada");
+					$(parent).addClass("linha");
+					$(".checkAll").prop("checked", false);
+					var span = document.getElementById("totalMinhaLista");
+					span.innerText = minhaLista.length;
+		    	}
+	    	});
 		}
 		
 		function toggleCheckbox(element){
  			var parent = element.parentElement.parentNode;
 			if (element.checked)
-				marcarLinha(parent);
+				marcarLinha(parent, element);
 			else
-				desmarcarLinha(parent);
+				desmarcarLinha(parent, element);
 		}
 		
 		function toggleCheckboxAll(element){
@@ -177,13 +194,13 @@ foreach ( $_SESSION ["lstIdiomas"] as $value ) {
 				$(".check").each(function(){
 					$(this).prop("checked", true);
 					var parent = $(this).parent().parent();
-					marcarLinha(parent);
+					marcarLinha(parent, this);
 				});
 			}else{
 				$(".check").each(function(){
 					$(this).prop("checked", false);
 					var parent = $(this).parent().parent();
-					desmarcarLinha(parent);
+					desmarcarLinha(parent, this);
 				});
 			}
 		}
@@ -433,14 +450,13 @@ foreach ( $_SESSION ["lstIdiomas"] as $value ) {
  	 		        	}else if($(this).data("last") != undefined){
  	 	 		        	if (totalPaginas > 5) $(this).removeClass("disabled");	
  	 		        	}
- 		        	});
- 		        	
-							 			
+ 		        	});	 			
 		    	}
 	    	});
 		}
 		
 		function search(){
+			
 			var elementTipo = document.getElementById("tipo");
 			tipo2 = elementTipo.options[elementTipo.selectedIndex].value;
 			var elementCampo = document.getElementById("campo");
@@ -448,7 +464,7 @@ foreach ( $_SESSION ["lstIdiomas"] as $value ) {
 			var elementIdioma = document.getElementById("idioma");
 			idioma2 = elementIdioma.options[elementIdioma.selectedIndex].value;
 			texto2 = document.getElementById("texto").value;
-
+			
 			if(tipo2 != tipo || campo2 != campo || idioma2 != idioma || texto2 != texto)
 				count();
 			else{
@@ -474,33 +490,44 @@ foreach ( $_SESSION ["lstIdiomas"] as $value ) {
 	 					}
 	 			  	},
 	 				success: function(listaJson){
-						
-	 					var listArray = JSON.parse(listaJson);
+	 					var objJson = JSON.parse(listaJson);
+	 					var formPesquisa = JSON.parse(listaJson)["formularioPesquisa"];
+						var listArray = [];
+						for(var i in objJson){
+							if (i != "formularioPesquisa")
+								listArray.push([i, objJson [i]]);
+						}
 	 					var tabela = document.getElementById("datatable-result").getElementsByTagName('tbody')[0];
 	 					if(listArray.length > 0){
 	 						for (var titulo in listArray) {
-								
 	 			        		var linha = tabela.insertRow(titulo);
 	 			        		var coluna_checkbox = linha.insertCell(0);
 	 							var coluna_acervo = linha.insertCell(1);
 	 							var coluna_detalhe = linha.insertCell(2);
 	 							coluna_checkbox.className = "middle";
 	 							coluna_acervo.setAttribute("colspan", 3);
-	 							coluna_detalhe.className = "middle";
-	 							coluna_checkbox.innerHTML = "<input id=\"" + listArray[titulo]["Codigo"] + "\" class=\"check\" type=\"checkbox\" onchange=\"toggleCheckbox(this)\" />";
-	 							coluna_acervo.innerHTML = "<b style=\"color: 0e4924;\">" + listArray[titulo]["Titulo"]
-	 										+ ((listArray[titulo]["SubTitulo"] != null ) ? " - " + listArray[titulo]["SubTitulo"] : "") + "</b>"
-	 										+ " - <b>" + listArray[titulo]["NomeTipoTitulo"] + "</b>"
-	 										+ " - acervo - " + listArray[titulo]["Codigo"] 
-	 										+ "<br> " + listArray[titulo]["NomeAutorPrincipal"] + "."
-	 										+ "<b> " + listArray[titulo]["Titulo"] 
-	 										+ ((listArray[titulo]["SubTitulo"] != null ) ? " - " + listArray[titulo]["SubTitulo"] : "") + "</b>."
-	 										+ ((listArray[titulo]["Edicao"] != null ) ? " " + listArray[titulo]["Edicao"] + "ed." : "")
-	 										+ listArray[titulo]["PublicacaoLocal"] + ": " + listArray[titulo]["NomeEditora"]
-	 										+ ", " + listArray[titulo]["PublicacaoData"]
-	 										+ ". " + listArray[titulo]["DescricaoFisica"] + "p."
-	 										+ "<br> Número de Chamada: " + listArray[titulo]["NumeroChamada"];
-	 							coluna_detalhe.innerHTML = "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span>";
+	 							coluna_detalhe.className = "middle redirect";
+	 							coluna_checkbox.innerHTML = "<input id=\"" + listArray[titulo][1]["Codigo"] + "\" class=\"check noimpression\" type=\"checkbox\" onchange=\"toggleCheckbox(this)\" />";
+	 							coluna_acervo.innerHTML = "<b style=\"color: 0e4924;\">" + listArray[titulo][1]["Titulo"]
+	 										+ ((listArray[titulo][1]["SubTitulo"] != null ) ? " - " + listArray[titulo][1]["SubTitulo"] : "") + "</b>"
+	 										+ " - <b>" + listArray[titulo][1]["NomeTipoTitulo"] + "</b>"
+	 										+ " - acervo - " + listArray[titulo][1]["Codigo"] 
+	 										+ "<br> " + listArray[titulo][1]["NomeAutorPrincipal"] + "."
+	 										+ "<b> " + listArray[titulo][1]["Titulo"] 
+	 										+ ((listArray[titulo][1]["SubTitulo"] != null ) ? " - " + listArray[titulo][1]["SubTitulo"] : "") + "</b>."
+	 										+ ((listArray[titulo][1]["Edicao"] != null ) ? " " + listArray[titulo][1]["Edicao"] + "ed." : "")
+	 										+ listArray[titulo][1]["PublicacaoLocal"] + ": " + listArray[titulo][1]["NomeEditora"]
+	 										+ ", " + listArray[titulo][1]["PublicacaoData"]
+	 										+ ". " + listArray[titulo][1]["DescricaoFisica"] + "p."
+	 										+ "<br> Número de Chamada: " + listArray[titulo][1]["NumeroChamada"];
+	 							coluna_detalhe.innerHTML = "<a href=\"javascript:void(0)\" onclick=\"redirectDetail(this);\" data-codigo=\"" + listArray[titulo][1]["Codigo"] + "\"><span class=\"glyphicon glyphicon-forward noimpression\" aria-hidden=\"true\"></span></a>";
+
+								if (listArray[titulo]["marcado"] == true){//MARCAR OS QUE JÁ ESTÃO NA MINHA LISTA
+									var check = $("#" + listArray[titulo][1]["Codigo"]);
+	 								check.prop("checked", true);
+	 								var parent = check.parent().parent();
+	 								marcarLinha(parent, check);
+								}
 	 		        		}
 	 					}else{
 	 						var linha = tabela.insertRow(0);
@@ -519,14 +546,87 @@ foreach ( $_SESSION ["lstIdiomas"] as $value ) {
 	 		        	if (lastRegisterPage > totalRegistos) lastRegisterPage = totalRegistos;
 						indices.innerHTML = "Exibindo de " + firstRegisterPage + " a " + lastRegisterPage + " de " + totalRegistos + " acervos encontrados";
 						novaPesquisa = false;
-	 		    	}
+
+						var filtros = "Busca por";
+						if ((formPesquisa["texto"] != "") && (formPesquisa["texto"] != undefined) && (formPesquisa["texto"] != null))
+							filtros += " \"<b>" + formPesquisa["texto"] + "</b>\"";
+						if ((formPesquisa["idioma"] != "0") && (formPesquisa["idioma"] != undefined) && (formPesquisa["idioma"] != null))
+							filtros += " no idioma \"<b>" + $("#idioma option[value='" + formPesquisa["idioma"] + "']").text() + "</b>\"";
+						if ((formPesquisa["campo"] != "Todos") && (formPesquisa["campo"] != undefined) && (formPesquisa["campo"] != null))
+							filtros += " no campo \"<b>" + formPesquisa["campo"] + "</b>\"";
+						else
+							filtros += " em todos os campos";
+						if ((formPesquisa["tipo"] != "0") && (formPesquisa["tipo"] != undefined) && (formPesquisa["tipo"] != null))
+							filtros += " do tipo \"<b>" + $("#tipo option[value='" + formPesquisa["tipo"] + "']").text() + "</b>\"";
+							
+						var info = document.getElementById("infobusca");
+						var pai = info.parentElement;
+						$(pai).removeClass("hide");
+						info.innerHTML = filtros;
+	 				}
 	 	    	});
 			}
 			
 		}
-		
-		$(document).ready(function(){
+
+		function imprimirTabela(){
+			var conteudo = "";
+			var html = "<!DOCTYPE html>"
+						+ "<html lang=\"pt\">";
+			html += document.getElementsByTagName('head')[0].innerHTML;
+			html += "<body>";
 			
+			$(".impressao").each(function(){
+				conteudo += this.innerHTML;
+			});
+			
+			var conteudohtml = document.createElement("div");
+			conteudohtml.innerHTML = conteudo;
+
+			$(conteudohtml).find(".noimpression").each(function(){
+				this.parentNode.removeChild(this);
+			});
+
+			conteudo = conteudohtml.outerHTML;			
+			html += conteudo;
+			html += "</body>";
+			html += "</html>";
+			
+		 	tela_impressao = window.open('Resultado_busca');
+            tela_impressao.document.write(html);
+            
+            tela_impressao.window.print();
+            tela_impressao.window.close();
+		}
+
+		function redirectDetail(element){
+			
+		}
+		$(document).ready(function(){
+			$.ajax({
+				url: "../controller/indexcontroller.php",
+				type: "POST",
+				async: false,
+				data:{
+					isNew: ""
+				},
+				success: function(retorno){
+					var retornoJson = JSON.parse(retorno);
+					if (retornoJson["new"] == false){
+						document.getElementById("tipo").value = retornoJson["tipo"];
+						var elementCampo = document.getElementById("campo");
+						for (var i = 0; i < elementCampo.options.length; i++) {
+						    if (elementCampo.options[i].text === retornoJson["campo"]) {
+						    	elementCampo.selectedIndex = i;
+						        break;
+						    }
+						}
+						document.getElementById("idioma").value = retornoJson["idioma"];
+						document.getElementById("texto").value = retornoJson["texto"];
+						search();
+					}
+		    	}
+	    	});			
 		});
 	</script>
 </body>

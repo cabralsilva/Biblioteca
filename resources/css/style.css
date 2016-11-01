@@ -91,4 +91,14 @@ thead{
 .indices{
 	margin: 0px -15px 0px -15px;
 }
+.redirect{
+	background-color: #f5f5f5;;
+}
+/* .redirect:HOVER{ */
+/* 	background-color: #f3f3f3;; */
+/* } */
+.alert{
+	margin-bottom: 0px !important;
+	padding: 10px !important;
+}
 

@@ -13,7 +13,6 @@ class TituloService {
 	public function searchTitulos($tipo, $campo, $idioma, $texto, $pagina, $quantidade) {
 		$texto = strtolower ( $texto );
 		$sql = $this->getSQLRegistros ( $tipo, $campo, $idioma, $texto, $pagina, $quantidade );
-// 		return $sql;
 		$consulta = $this->banco->getConexaoBanco ()->query ( $sql );
 		
 		$_titulos = array ();
@@ -21,7 +20,6 @@ class TituloService {
 		while ( $linha = $consulta->fetch_array ( MYSQLI_ASSOC ) ) {
 			$linha["NomeAutorPrincipal"] = $this->getAutorPrincipal($linha["Codigo"])["NomeAutor"];
 			array_push ( $_titulos, $linha );
-// 			// $_SESSION["dados_empresa"]["cod_empresa"] = $linha["CODIGO"];
 		}
 		$consulta->close ();
 		return $_titulos;
@@ -29,7 +27,6 @@ class TituloService {
 	public function getTotalRegistros($tipo, $campo, $idioma, $texto) {
 		$texto = strtolower ( $texto );
 		$sql = $this->getSQLContagem ( $tipo, $campo, $idioma, $texto );
-// 		return $sql;
 		$consulta = $this->banco->getConexaoBanco ()->query ( $sql );
 		if (! $consulta)
 			echo mysql_error ();
