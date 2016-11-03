@@ -34,6 +34,41 @@ class TituloService {
 		$consulta->close ();
 		return ( int ) $total [0];
 	}
+
+	public function getAutoresSecundarios($codigoTitulo){
+		$sql = "SELECT autortitulo.NomeAutor FROM autortitulo WHERE autortitulo.CodigoTitulo = " . $codigoTitulo . " AND autortitulo.AutorPrincipal IS NULL";
+		$buscaAutores = $this->banco->getConexaoBanco()->query( $sql);
+		$autores = array ();
+	
+		while ( $linha = $buscaAutores->fetch_array ( MYSQLI_ASSOC ) ) {
+			array_push ( $autores, $linha );
+		}
+		$buscaAutores->close ();
+		return $autores;
+	}
+	public function getAssuntosTitulo($codigoTitulo){
+		$sql = "SELECT assuntotitulo.NomeAssunto FROM assuntotitulo WHERE assuntotitulo.CodigoTitulo = " . $codigoTitulo ;
+		$buscaAssuntos = $this->banco->getConexaoBanco()->query( $sql);
+		$assuntos = array ();
+	
+		while ( $linha = $buscaAssuntos->fetch_array ( MYSQLI_ASSOC ) ) {
+			array_push ( $assuntos, $linha );
+		}
+		$buscaAssuntos->close ();
+		return $assuntos;
+	}
+	public function getExemplares($codigoTitulo){
+		$sql = "SELECT exemplar.Codigo, exemplar.Status FROM exemplar WHERE exemplar.CodigoTitulo = " . $codigoTitulo ;
+		$buscaExemplares = $this->banco->getConexaoBanco()->query( $sql);
+		$exemplares = array ();
+	
+		while ( $linha = $buscaExemplares->fetch_array ( MYSQLI_ASSOC ) ) {
+			array_push ( $exemplares, $linha );
+		}
+		$buscaExemplares->close ();
+		return $exemplares;
+	}
+	
 	private function getAutorPrincipal($codigoTitulo){
 		$sql = "SELECT autortitulo.NomeAutor FROM autortitulo WHERE autortitulo.CodigoTitulo = " . $codigoTitulo . " AND autortitulo.AutorPrincipal IS NOT NULL";
 		$buscaAutor = $this->banco->getConexaoBanco()->query( $sql);
@@ -43,7 +78,7 @@ class TituloService {
 		$buscaAutor->close();
 		return $retorno;
 	}
-	
+		
 	private function getSQLContagem($tipo, $campo, $idioma, $texto) {
 		$sql = "SELECT COUNT(DISTINCT Titulo.Codigo) AS TOTAL FROM Titulo";
 		$sql .= $this->getSQLCondicoes ( $tipo, $campo, $idioma, $texto );

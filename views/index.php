@@ -18,11 +18,23 @@
 </head>
 <body>
 	<div class="container">
-		<form id="frm-pesquisa" name="frm-pesquisa" class="form-inline">
-			<div class="row text-center">
-				<label for="tipo">Tipo</label> <select id="tipo"
-					class="form-control">
-					<option value="0" selected="selected">Todos</option>
+		<div class="row">
+			<div class="col-xs-12 col-md-3 col-sm-3 vcenter text-center ">
+				<img src="../resources/images/logo.png">
+			</div>
+			<div class="col-xs-12 col-md-8 col-sm-8 vcenter">
+				<img class="bannerheader" src="../resources/images/cabecalho.jpg">
+			</div>
+
+
+
+		</div>
+		<div class="row">
+			<form id="frm-pesquisa" name="frm-pesquisa" class="form-inline">
+				<div class="row text-center">
+					<label for="tipo">Tipo</label> <select id="tipo"
+						class="form-control">
+						<option value="0" selected="selected">Todos</option>
 					<?php
 					
 					foreach ( $_SESSION ["lstTipoTitulo"] as $value ) {
@@ -30,16 +42,16 @@
 					}
 					?>
 				</select> <label for="campo">Campo</label> <select id="campo"
-					class="form-control">
-					<option value="0" selected="selected">Todos</option>
-					<option value="1">Titulo</option>
-					<option value="2">Autor</option>
-					<option value="3">Editora</option>
-					<option value="4">Área</option>
-					<option value="5">Assunto</option>
-				</select> <label for="idioma">Idioma</label> <select id="idioma"
-					class="form-control">
-					<option value="0" selected="selected">Todos</option>
+						class="form-control">
+						<option value="0" selected="selected">Todos</option>
+						<option value="1">Titulo</option>
+						<option value="2">Autor</option>
+						<option value="3">Editora</option>
+						<option value="4">Área</option>
+						<option value="5">Assunto</option>
+					</select> <label for="idioma">Idioma</label> <select id="idioma"
+						class="form-control">
+						<option value="0" selected="selected">Todos</option>
 					<?php
 					
 					foreach ( $_SESSION ["lstIdiomas"] as $value ) {
@@ -47,15 +59,16 @@
 					}
 					?>
 				</select>
-			</div>
-			<div class="row text-center">
-				<input minlength=3 required
-					onkeydown="if (event.keyCode == 13) {document.frm-pesquisa.submit(); return false;}"
-					class="form-control" placeholder="O que procura?" id="texto"
-					type="text">
-				<button type="submit" class="btn btn-default">Pesquisar</button>
-			</div>
-		</form>
+				</div>
+				<div class="row text-center">
+					<input minlength=3 required
+						onkeydown="if (event.keyCode == 13) {document.frm-pesquisa.submit(); return false;}"
+						class="form-control" placeholder="O que procura?" id="texto"
+						type="text">
+					<button type="submit" class="btn btn-default">Pesquisar</button>
+				</div>
+			</form>
+		</div>
 		<div class="row impressao hide">
 			<div id="infobusca" class="alert alert-info text-center" role="alert"></div>
 		</div>
@@ -97,10 +110,10 @@
 						<th width="2%" class="middle"><input id="123"
 							class="checkAll noimpression" type="checkbox"
 							onchange="toggleCheckboxAll(this)" /></th>
-						<th width="10%"><span
+						<th width="10%"><a href="minhalista.php"><span
 							class="glyphicon glyphicon-list-alt noimpression"
 							aria-hidden="true"></span> <span id="totalMinhaLista"
-							class="noimpression">0</span> <span class="noimpression">item(ns)</span></th>
+							class="noimpression"><?= count($_SESSION ["minhaListaAcervo"]) ?></span> <span class="noimpression">item(ns)</span></a></th>
 						<th width="80%" class="center">Acervos <span
 							class="glyphicon glyphicon-book" aria-hidden="true"></span></th>
 						<th width="10%"><button type="button"
@@ -119,6 +132,12 @@
 					aria-valuemax="100" style="width: 100%">Carregando...</div>
 			</div>
 		</div>
+		<div class="footer">
+			<div class="col-xs-12 col-md-12 col-sm-12 text-center">
+				<a href="http://www.fasbam.edu.br/biblioteca/periodicos.php" target="_blank"><img
+					src="../resources/images/biblioteca-virtual.png"></a>
+			</div>
+		</div>
 	</div>
 	<script type="text/javascript">
 		var page = 1;
@@ -127,6 +146,7 @@
 		var firstRegisterPage = 1;
 		var lastRegisterPage = 1;
 		var novaPesquisa = true;
+		var qtdeMarcados = 0;
 
 		var tipo;
 		var campo;
@@ -154,6 +174,13 @@
 					$(parent).addClass("linha-marcada");
 					var span = document.getElementById("totalMinhaLista");
 					span.innerText = minhaLista.length;
+					if (qtdeMarcados == 10){
+	        			var check = $(".checkAll");
+						check.prop("checked", true);
+	        		}else{
+	        			var check = $(".checkAll");
+						check.prop("checked", false);
+	        		}
 		    	}
 	    	});
 	    	
@@ -183,10 +210,13 @@
 		
 		function toggleCheckbox(element){
  			var parent = element.parentElement.parentNode;
-			if (element.checked)
+			if (element.checked){
+				qtdeMarcados++;
 				marcarLinha(parent, element);
-			else
+			}else{
+				qtdeMarcados--;
 				desmarcarLinha(parent, element);
+			}
 		}
 		
 		function toggleCheckboxAll(element){
@@ -378,6 +408,7 @@
 				},
 				beforeSend: function() {
 					$(".progress").removeClass("hidden");
+					$(".paginacao").addClass("hidden");
 					$("#bodyResult").empty();
 			  	},
 				success: function(total){
@@ -487,6 +518,7 @@
 	 					if (!novaPesquisa){
 		 					$(".progress").removeClass("hidden");
 		 					$("#bodyResult").empty();
+		 					$(".paginacao").addClass("hidden");
 	 					}
 	 			  	},
 	 				success: function(listaJson){
@@ -499,6 +531,7 @@
 						}
 	 					var tabela = document.getElementById("datatable-result").getElementsByTagName('tbody')[0];
 	 					if(listArray.length > 0){
+		 					qtdeMarcados = 0;
 	 						for (var titulo in listArray) {
 	 			        		var linha = tabela.insertRow(titulo);
 	 			        		var coluna_checkbox = linha.insertCell(0);
@@ -522,13 +555,23 @@
 	 										+ "<br> Número de Chamada: " + listArray[titulo][1]["NumeroChamada"];
 	 							coluna_detalhe.innerHTML = "<a href=\"javascript:void(0)\" onclick=\"redirectDetail(this);\" data-codigo=\"" + listArray[titulo][1]["Codigo"] + "\"><span class=\"glyphicon glyphicon-forward noimpression\" aria-hidden=\"true\"></span></a>";
 
-								if (listArray[titulo]["marcado"] == true){//MARCAR OS QUE JÁ ESTÃO NA MINHA LISTA
+								if (listArray[titulo][1]["marcado"] == true){//MARCAR OS QUE JÁ ESTÃO NA MINHA LISTA
+// 									console.log("Marcando-> " + listArray[titulo][1]["marcado"]);
 									var check = $("#" + listArray[titulo][1]["Codigo"]);
 	 								check.prop("checked", true);
 	 								var parent = check.parent().parent();
 	 								marcarLinha(parent, check);
+	 								qtdeMarcados++;
 								}
 	 		        		}
+	 		        		if (qtdeMarcados == 10){
+	 		        			var check = $(".checkAll");
+ 								check.prop("checked", true);
+	 		        		}else{
+	 		        			var check = $(".checkAll");
+ 								check.prop("checked", false);
+	 		        		}
+		 		        		
 	 					}else{
 	 						var linha = tabela.insertRow(0);
 	 						var coluna_unica = linha.insertCell(0);
@@ -541,6 +584,7 @@
 						
 	 					$("#bodyResult").fadeIn();
 	 		        	$(".progress").addClass("hidden");
+	 		        	$(".paginacao").removeClass("hidden");
 	
 	 		        	var indices = document.getElementById("indices");
 	 		        	if (lastRegisterPage > totalRegistos) lastRegisterPage = totalRegistos;
@@ -600,7 +644,19 @@
 		}
 
 		function redirectDetail(element){
-			
+			console.log($(element).attr("data-codigo"));
+			$.ajax({
+				url: "../controller/indexcontroller.php",
+				type: "POST",
+				async: false,
+				data:{
+					redirectDetail: $(element).attr("data-codigo")
+				},
+				success: function(retorno){
+					console.log(JSON.parse(retorno));
+					window.location.href = "titulodetalhe.php";
+		    	}
+	    	});
 		}
 		$(document).ready(function(){
 			$.ajax({

@@ -27,12 +27,11 @@
 				}
 				$listaRetorno[$key]["marcado"] = $acervo["marcado"];
 				array_push($_SESSION["listaAcervo"], $acervo);
-				
 			}
 			$pesquisa["page"] = $_POST["pagina"];
 			$_SESSION["formularioPesquisa"] = $pesquisa;
 			$listaRetorno["formularioPesquisa"] = $_SESSION["formularioPesquisa"];
-			echo  json_encode($listaRetorno);
+			echo json_encode($listaRetorno);
 		} else { //REALIZAR CONTAGEM DE REGISTROS
 			$totalRegistros = $ts->getTotalRegistros($_POST["tipo"], $_POST["campo"], $_POST["idioma"], $_POST["texto"]);
 			$_SESSION["totalRegistros"] = $totalRegistros;
@@ -57,14 +56,9 @@
 				}
 			}
 		}elseif ($_POST["tipo"] == "removeMinhaLista"){
-			foreach ($_SESSION["listaAcervo"] as $acervo){
-				if ($acervo["Codigo"] == $_POST["codigoAcervo"]){
-					foreach ($_SESSION["minhaListaAcervo"] as $key => $meuAcervo){
-						if ($meuAcervo["Codigo"] == $_POST["codigoAcervo"]){
-							unset($_SESSION["minhaListaAcervo"][$key]);
-							break;
-						}
-					}
+			foreach ($_SESSION["minhaListaAcervo"] as $key => $meuAcervo){
+				if ($meuAcervo["Codigo"] == $_POST["codigoAcervo"]){
+					unset($_SESSION["minhaListaAcervo"][$key]);
 					break;
 				}
 			}
@@ -72,7 +66,20 @@
 		echo json_encode($_SESSION["minhaListaAcervo"]);
 	}elseif(isset($_POST["isNew"])){
 		echo json_encode($_SESSION["formularioPesquisa"]);
+	}elseif(isset($_POST["redirectDetail"])){
+		foreach ($_SESSION["listaAcervo"] as $acervo){
+			if ($acervo["Codigo"] == $_POST["redirectDetail"]){
+				$ts = new TituloService();
+				
+				$acervo["AutoresSecundarios"] = $ts->getAutoresSecundarios($_POST["redirectDetail"]);
+				$acervo["Assuntos"] = $ts->getAssuntosTitulo($_POST["redirectDetail"]);
+				$acervo["Exemplares"] = $ts->getExemplares($_POST["redirectDetail"]);
+				$_SESSION["acervoDetalhe"] = $acervo;
+				echo json_encode($acervo);
+			}
+		}
 	}else{ //LIMPAR FORMULÁRIO PARA NOVA BUSCA
+		$_SESSION["acervoDetalhe"] = null;
 		$pesquisa = array(
 			"new" => TRUE
 		);
@@ -82,7 +89,7 @@
 		$_SESSION["lstIdiomas"] = $is->getListIdiomas();
 		$_SESSION["lstTipoTitulo"] = $tts->getListTipo();
 		
-		$_SESSION["minhaListaAcervo"] = array();
+		if(count($_SESSION["minhaListaAcervo"]) == 0) $_SESSION["minhaListaAcervo"] = array();
 		header("Location: ../views/index.php");
 		exit();
 	}
