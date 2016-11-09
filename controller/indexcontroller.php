@@ -75,6 +75,10 @@
 				$acervo["Assuntos"] = $ts->getAssuntosTitulo($_POST["redirectDetail"]);
 				$acervo["Exemplares"] = $ts->getExemplares($_POST["redirectDetail"]);
 				$_SESSION["acervoDetalhe"] = $acervo;
+				$_SESSION["diretorio"] = "../modulo_imagem/arquivos/".$acervo["Codigo"];
+				$_SESSION["files"] = scandir($_SESSION["diretorio"]);
+				$_SESSION["total_arquivos"] = count($_SESSION['files']);
+				$_SESSION["diretorio"] = str_replace("..", "/fasbam", $_SESSION["diretorio"]);
 				echo json_encode($acervo);
 			}
 		}
@@ -90,7 +94,7 @@
 		$_SESSION["lstTipoTitulo"] = $tts->getListTipo();
 		
 		if(count($_SESSION["minhaListaAcervo"]) == 0) $_SESSION["minhaListaAcervo"] = array();
-		header("Location: ../views/index.php");
+		header("Location: /fasbam/busca");
 		exit();
 	}
 	

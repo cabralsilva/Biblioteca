@@ -1,0 +1,29 @@
+@CHARSET "UTF-8";
+.sortable {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.sortable li {
+	float: left;
+	margin: 20px;
+	width: 225px;
+	height: 124px;
+	cursor: move;
+}
+.bodyfiles{
+	padding: 10px 10px; 
+	border-top: 2px solid #DDDDDD;
+}
+
+.bodyfiles img{
+	float: left; 
+	border: 2px solid #CCCCCC;
+	max-height: 200px;
+}
+
+.bodyfiles img.remover{
+	float: left; 
+	border: 0px;
+}

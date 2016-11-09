@@ -4,39 +4,43 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
-	href="../resources/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+	href="/fasbam/resources/bootstrap-3.3.7-dist/css/bootstrap.min.css">
 <link rel="stylesheet"
-	href="../resources/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css">
+	href="/fasbam/resources/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css">
 <link rel="stylesheet"
-	href="../resources/bootstrap-3.3.7-dist/css/equal-height-columns.css">
-<link rel="stylesheet" href="../resources/css/style.css">
-<script src="../resources/bootstrap-3.3.7-dist/js/jquery-3.1.1.min.js"></script>
-<script src="../resources/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+	href="/fasbam/resources/bootstrap-3.3.7-dist/css/equal-height-columns.css">
+<link rel="stylesheet" href="/fasbam/resources/css/style.css">
 <script
-	src="../resources/bootstrap-3.3.7-dist/js/bootstrap-waitingfor.js"></script>
-
+	src="/fasbam/resources/bootstrap-3.3.7-dist/js/jquery-3.1.1.min.js"></script>
+<script src="/fasbam/resources/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<script
+	src="/fasbam/resources/bootstrap-3.3.7-dist/js/bootstrap-waitingfor.js"></script>
 </head>
 <body>
 	<div class="container">
 		<div class="row">
 			<div class="col-xs-12 col-md-3 col-sm-3 vcenter text-center ">
-				<img src="../resources/images/logo.png">
+				<img src="/fasbam/resources/images/logo.png">
 			</div>
 			<div class="col-xs-12 col-md-8 col-sm-8 vcenter">
-				<img class="bannerheader" src="../resources/images/cabecalho.jpg">
+				<img class="bannerheader"
+					src="/fasbam/resources/images/cabecalho.jpg">
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-4">
 				<div class="btn-group btn-group-justified" role="group">
 					<div class="btn-group" role="group">
-						<a href="index.php" class="btn btn-default" role="button"><span aria-hidden="true">&larr;</span> voltar</a>
+						<a href="/fasbam/busca" class="btn btn-default" role="button"><span
+							aria-hidden="true">&larr;</span> voltar</a>
 					</div>
 					<div class="btn-group" role="group">
-						<a href="../controller/indexcontroller.php" class="btn btn-default" role="button"><span class="glyphicon glyphicon-search"></span> nova busca</a>
+						<a href="/fasbam/nova-busca" class="btn btn-default" role="button"><span
+							class="glyphicon glyphicon-search"></span> nova busca</a>
 					</div>
 					<div class="btn-group" role="group">
-						<a href="minhalista.php" class="btn btn-default" role="button">minha lista <span aria-hidden="true">&rarr;</a>
+						<a href="/fasbam/minha-lista" class="btn btn-default"
+							role="button">minha lista <span aria-hidden="true">&rarr;</a>
 					</div>
 				</div>
 			</div>
@@ -46,10 +50,52 @@
 				<div class="panel panel-default">
 					<div class="panel-heading text-center">
 						<b>Detalhes do livro</b>
+						
 					</div>
+					
 					<div class="panel-body">
 						<div class="text-center row">
-							<img class="foto-livro" src="../resources/images/sem-foto.gif">
+							<div class="col-xs-12 col-md-12 col-sm-12">
+								<div id="myCarousel" class="carousel slide" data-ride="carousel">
+									<ol class="carousel-indicators">
+										<?php for ($_i=0; $_i<$_SESSION["total_arquivos"]; $_i++){?>
+											<?php if ($_SESSION["files"][$_i] != '.' && $_SESSION["files"][$_i] != '..'){?>
+												<li data-target="#myCarousel" data-slide-to="<?= $_i?>" class="<?= ($_i == 2)? "active":null?>"></li>
+											<?php }?>
+										<?php }?>
+									</ol>
+									<div class="carousel-inner" role="listbox">
+									<?php if ($_SESSION["total_arquivos"] > 2){?>
+										<?php for ($_i=0; $_i<$_SESSION["total_arquivos"]; $_i++){?>
+											<?php if ($_SESSION["files"][$_i] != '.' && $_SESSION["files"][$_i] != '..'){?>
+												<div class="item <?= ($_i == 2)? "active":null?>">
+													<img class="foto-livro"
+														src="<?= $_SESSION["diretorio"]?>/<?= $_SESSION["files"][$_i]?>"
+														alt="Titulo">
+												</div>
+											<?php }?>
+										<?php }?>
+									<?php }else {?>
+										<div class="item active">
+											<img class="foto-livro"
+												src="/fasbam/resources/images/sem-foto.gif"
+												alt="Sem foto">
+										</div>
+									<?php }?>
+									</div>
+
+									<a class="left carousel-control" href="#myCarousel"
+										role="button" data-slide="prev"> <span
+										class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+										<span class="sr-only">Anterior</span>
+									</a> <a class="right carousel-control" href="#myCarousel"
+										role="button" data-slide="next"> <span
+										class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+										<span class="sr-only">Próxima</span>
+									</a>
+								</div>
+							</div>
+							<!-- 							<img class="foto-livro" src="/fasbam/resources/images/sem-foto.gif"> -->
 						</div>
 						<table class="table table-hover">
 							<tr>
@@ -71,7 +117,7 @@
 								<td class="largura60"><?php foreach ($_SESSION["acervoDetalhe"]["AutoresSecundarios"] as $autorS){ ?>
 						  			<a href="javascript:void(0)"
 									onclick="novaBuscaComFiltro(this);" data-filtro="Autor"
-									data-nome="<?= $autorS["NomeAutor"] ?>"><?= $autorS["NomeAutor"]; ?></a><br />
+									data-nome="<?= $autorS["Nome"] ?>"><?= $autorS["Nome"]; ?></a><br />
 						  		<?php }?></td>
 							</tr>
 							<tr>
@@ -119,7 +165,7 @@
 								<td class="largura60"><?php foreach ($_SESSION["acervoDetalhe"]["Assuntos"] as $assuntos){ ?>
 						  			<a href="javascript:void(0)"
 									onclick="novaBuscaComFiltro(this);" data-filtro="Assunto"
-									data-nome="<?= $assuntos["NomeAssunto"] ?>"><?= $assuntos["NomeAssunto"]; ?></a><br />
+									data-nome="<?= $assuntos["Nome"] ?>"><?= $assuntos["Nome"]; ?></a><br />
 						  		<?php }?></td>
 							</tr>
 
@@ -190,13 +236,13 @@
 		<div class="col-xs-12 col-md-12 col-sm-12 text-center">
 			<a href="http://www.fasbam.edu.br/biblioteca/periodicos.php"
 				target="_blank"><img
-				src="../resources/images/biblioteca-virtual.png"></a>
+				src="/fasbam/resources/images/biblioteca-virtual.png"></a>
 		</div>
 	</div>
 	<script type="text/javascript">
 	function novaBuscaComFiltro(element){
 		$.ajax({
-			url: "../controller/titulocontroller.php", 
+			url: "/fasbam/controller/titulocontroller.php", 
 			async: false,
 			type: "POST",
 			data:{
@@ -204,7 +250,7 @@
 				texto: $(element).attr("data-nome")
 			},
 			success: function(success){
-				window.location.href = "index.php";
+				window.location.href = "/fasbam/busca";
 	    	}
     	});
 	}

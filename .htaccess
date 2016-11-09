@@ -1,0 +1,19 @@
+ErrorDocument 404 http://localhost:8080/fasbam/views/error/404.php
+Options -Indexes
+DirectoryIndex views/index.php
+
+RewriteEngine on
+	#RewriteCond %{REQUEST_FILENAME} !-f
+	#RewriteCond %{REQUEST_URI} !^.*\.(jpg|css|js|gif|png)$ [NC] 
+	#RewriteRule ^(.*)/ views/index.php [NC]
+	RewriteRule ^views/$ views/index.php [NC]
+	RewriteRule ^controller/$ views/index.php [NC]
+	RewriteRule ^services/$ views/index.php [NC]
+	RewriteRule ^detalhamento views/titulodetalhe.php [NC]
+	RewriteRule ^busca views/index.php [NC]
+	RewriteRule ^nova-busca controller/indexcontroller.php [NC]
+	RewriteRule ^minha-lista views/minhalista.php [NC]
+	#RewriteRule ^modulo_imagem/controller modulo_imagem/controller/enviacontroller.php [NC]
+	
+	
+	

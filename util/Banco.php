@@ -1,9 +1,9 @@
 ﻿<?php
 	define("MYSQL_CONN_ERROR", "Não foi possível conectar a base de dados."); 
-	define("NOME_BANCO", "fasbam");
-	define("NOME_USUARIO", "root");
-	define("SENHA_BANCO", "root");
-	define("HOST_BANCO", "127.0.0.1:3306");
+	define("NOME_BANCO", "ibolt_fasbam");
+	define("NOME_USUARIO", "ibolt_fasbam");
+	define("SENHA_BANCO", "bdfas@78");
+	define("HOST_BANCO", "186.202.152.57:3306");
 	mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT); 
 	
 	class BancoDados{

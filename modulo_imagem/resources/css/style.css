@@ -141,18 +141,3 @@ thead {
 .foto-livro{
 	max-height: 200px;
 }
-
-.carousel-inner > .item > img,
-  .carousel-inner > .item > a > img {
-/*       width: 70%; */
-      margin: auto;
- }
- .carousel-control.left{
- 	background-image: none !important;
- 	color: rgba(204,204,204,0.8);
- }
- .carousel-control.right{
- 	background-image: none !important;
- 	color: rgba(204,204,204,0.8);
- } 
- 

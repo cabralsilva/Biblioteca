@@ -1,29 +1,27 @@
-<?php session_start();?>
+<?php session_start();
+	if (! isset($_SESSION ["minhaListaAcervo"])) header("location: nova-busca");?>
 <!DOCTYPE html>
 <html lang="pt">
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="../resources/bootstrap-3.3.7-dist/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="../resources/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css">
-<link rel="stylesheet"
-	href="../resources/bootstrap-3.3.7-dist/css/equal-height-columns.css">
-<link rel="stylesheet" href="../resources/css/style.css">
-<script src="../resources/bootstrap-3.3.7-dist/js/jquery-3.1.1.min.js"></script>
-<script src="../resources/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="/fasbam/resources/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="/fasbam/resources/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="/fasbam/resources/bootstrap-3.3.7-dist/css/equal-height-columns.css">
+<link rel="stylesheet" href="/fasbam/resources/css/style.css">
+<script src="/fasbam/resources/bootstrap-3.3.7-dist/js/jquery-3.1.1.min.js"></script>
+<script src="/fasbam/resources/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 <script
-	src="../resources/bootstrap-3.3.7-dist/js/bootstrap-waitingfor.js"></script>
+	src="/fasbam/resources/bootstrap-3.3.7-dist/js/bootstrap-waitingfor.js"></script>
 
 </head>
 <body>
 	<div class="container">
 		<div class="row">
 			<div class="col-xs-12 col-md-3 col-sm-3 vcenter text-center ">
-				<img src="../resources/images/logo.png">
+				<img src="/fasbam/resources/images/logo.png">
 			</div>
 			<div class="col-xs-12 col-md-8 col-sm-8 vcenter">
-				<img class="bannerheader" src="../resources/images/cabecalho.jpg">
+				<img class="bannerheader" src="/fasbam/resources/images/cabecalho.jpg">
 			</div>
 
 
@@ -110,13 +108,13 @@
 						<th width="2%" class="middle"><input id="123"
 							class="checkAll noimpression" type="checkbox"
 							onchange="toggleCheckboxAll(this)" /></th>
-						<th width="10%"><a href="minhalista.php"><span
+						<th width="10%" class="middle"><a class="noimpression" href="/fasbam/minha-lista"><span
 							class="glyphicon glyphicon-list-alt noimpression"
 							aria-hidden="true"></span> <span id="totalMinhaLista"
 							class="noimpression"><?= count($_SESSION ["minhaListaAcervo"]) ?></span> <span class="noimpression">item(ns)</span></a></th>
-						<th width="80%" class="center">Acervos <span
+						<th width="80%" class="center middle">Acervos <span
 							class="glyphicon glyphicon-book" aria-hidden="true"></span></th>
-						<th width="10%"><button type="button"
+						<th width="10%" class="middle"><button type="button"
 								class="btn btn-default noimpression" onclick="imprimirTabela()">
 								<span class="glyphicon glyphicon-print"></span> Imprimir
 							</button></th>
@@ -135,7 +133,7 @@
 		<div class="footer">
 			<div class="col-xs-12 col-md-12 col-sm-12 text-center">
 				<a href="http://www.fasbam.edu.br/biblioteca/periodicos.php" target="_blank"><img
-					src="../resources/images/biblioteca-virtual.png"></a>
+					src="/fasbam/resources/images/biblioteca-virtual.png"></a>
 			</div>
 		</div>
 	</div>
@@ -158,7 +156,7 @@
 		}
 		function marcarLinha(parent, element){
 			$.ajax({
-				url: "../controller/indexcontroller.php", 
+				url: "/fasbam/controller/indexcontroller.php", 
 				async: false,
 				type: "POST",
 				data:{
@@ -187,7 +185,7 @@
 		}
 		function desmarcarLinha(parent, element){
 			$.ajax({
-				url: "../controller/indexcontroller.php", 
+				url: "/fasbam/controller/indexcontroller.php", 
 				async: false,
 				type: "POST",
 				data:{
@@ -398,7 +396,7 @@
 			firstRegisterPage = (page * 10) - (10 - 1);
 			lastRegisterPage = (page * 10);
 			$.ajax({
-				url: "../controller/indexcontroller.php", 
+				url: "/fasbam/controller/indexcontroller.php", 
 				type: "POST",
 				data:{
 					tipo: tipo,
@@ -412,6 +410,7 @@
 					$("#bodyResult").empty();
 			  	},
 				success: function(total){
+// 					console.log(total);
 					totalRegistos = total;
 					totalPaginas = (Math.ceil(totalRegistos / 10));
 					if (lastRegisterPage > totalRegistos) lastRegisterPage = totalRegistos;
@@ -481,7 +480,7 @@
  	 		        	}else if($(this).data("last") != undefined){
  	 	 		        	if (totalPaginas > 5) $(this).removeClass("disabled");	
  	 		        	}
- 		        	});	 			
+ 		        	});	 	
 		    	}
 	    	});
 		}
@@ -504,7 +503,7 @@
 				var lastRegisterPage = (page * 10);
 				
 				$.ajax({
-	 				url: "../controller/indexcontroller.php", 
+	 				url: "/fasbam/controller/indexcontroller.php", 
 	 				type: "POST",
 	 				data:{
 	 					tipo: tipo,
@@ -522,6 +521,7 @@
 	 					}
 	 			  	},
 	 				success: function(listaJson){
+		 				console.log(listaJson);
 	 					var objJson = JSON.parse(listaJson);
 	 					var formPesquisa = JSON.parse(listaJson)["formularioPesquisa"];
 						var listArray = [];
@@ -533,6 +533,10 @@
 	 					if(listArray.length > 0){
 		 					qtdeMarcados = 0;
 	 						for (var titulo in listArray) {
+		 						var codigo = "";
+		 						for(var i = 6; i > listArray[titulo][1]["Codigo"].length; i--) codigo += "0";
+		 						listArray[titulo][1]["Codigo"] = codigo + "" + listArray[titulo][1]["Codigo"];
+			 					
 	 			        		var linha = tabela.insertRow(titulo);
 	 			        		var coluna_checkbox = linha.insertCell(0);
 	 							var coluna_acervo = linha.insertCell(1);
@@ -549,14 +553,13 @@
 	 										+ "<b> " + listArray[titulo][1]["Titulo"] 
 	 										+ ((listArray[titulo][1]["SubTitulo"] != null ) ? " - " + listArray[titulo][1]["SubTitulo"] : "") + "</b>."
 	 										+ ((listArray[titulo][1]["Edicao"] != null ) ? " " + listArray[titulo][1]["Edicao"] + "ed." : "")
-	 										+ listArray[titulo][1]["PublicacaoLocal"] + ": " + listArray[titulo][1]["NomeEditora"]
+	 										+ " " + listArray[titulo][1]["PublicacaoLocal"] + ": " + listArray[titulo][1]["NomeEditora"]
 	 										+ ", " + listArray[titulo][1]["PublicacaoData"]
 	 										+ ". " + listArray[titulo][1]["DescricaoFisica"] + "p."
 	 										+ "<br> Número de Chamada: " + listArray[titulo][1]["NumeroChamada"];
 	 							coluna_detalhe.innerHTML = "<a href=\"javascript:void(0)\" onclick=\"redirectDetail(this);\" data-codigo=\"" + listArray[titulo][1]["Codigo"] + "\"><span class=\"glyphicon glyphicon-forward noimpression\" aria-hidden=\"true\"></span></a>";
 
 								if (listArray[titulo][1]["marcado"] == true){//MARCAR OS QUE JÁ ESTÃO NA MINHA LISTA
-// 									console.log("Marcando-> " + listArray[titulo][1]["marcado"]);
 									var check = $("#" + listArray[titulo][1]["Codigo"]);
 	 								check.prop("checked", true);
 	 								var parent = check.parent().parent();
@@ -607,6 +610,7 @@
 						var pai = info.parentElement;
 						$(pai).removeClass("hide");
 						info.innerHTML = filtros;
+						
 	 				}
 	 	    	});
 			}
@@ -644,23 +648,21 @@
 		}
 
 		function redirectDetail(element){
-			console.log($(element).attr("data-codigo"));
 			$.ajax({
-				url: "../controller/indexcontroller.php",
+				url: "/fasbam/controller/indexcontroller.php",
 				type: "POST",
 				async: false,
 				data:{
 					redirectDetail: $(element).attr("data-codigo")
 				},
 				success: function(retorno){
-					console.log(JSON.parse(retorno));
-					window.location.href = "titulodetalhe.php";
+					window.location.href = "/fasbam/detalhamento";
 		    	}
 	    	});
 		}
 		$(document).ready(function(){
 			$.ajax({
-				url: "../controller/indexcontroller.php",
+				url: "/fasbam/controller/indexcontroller.php",
 				type: "POST",
 				async: false,
 				data:{
