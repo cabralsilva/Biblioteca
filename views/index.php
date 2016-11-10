@@ -6,12 +6,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/fasbam/resources/bootstrap-3.3.7-dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="/fasbam/resources/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css">
-<link rel="stylesheet" href="/fasbam/resources/bootstrap-3.3.7-dist/css/equal-height-columns.css">
 <link rel="stylesheet" href="/fasbam/resources/css/style.css">
+<link rel="stylesheet" href="/fasbam/resources/keyboard/keyboard.css">
 <script src="/fasbam/resources/bootstrap-3.3.7-dist/js/jquery-3.1.1.min.js"></script>
 <script src="/fasbam/resources/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-<script
-	src="/fasbam/resources/bootstrap-3.3.7-dist/js/bootstrap-waitingfor.js"></script>
+<script src="/fasbam/resources/bootstrap-3.3.7-dist/js/bootstrap-waitingfor.js"></script>
+
+<script src="/fasbam/resources/keyboard/keyboard.js"></script>
 
 </head>
 <body>
@@ -30,49 +31,58 @@
 		<div class="row">
 			<form id="frm-pesquisa" name="frm-pesquisa" class="form-inline">
 				<div class="row text-center">
-					<label for="tipo">Tipo</label> <select id="tipo"
-						class="form-control">
-						<option value="0" selected="selected">Todos</option>
-					<?php
-					
-					foreach ( $_SESSION ["lstTipoTitulo"] as $value ) {
-						echo "<option value=\"" . $value ["Codigo"] . "\">" . $value ["Nome"] . "</option>";
-					}
-					?>
-				</select> <label for="campo">Campo</label> <select id="campo"
-						class="form-control">
-						<option value="0" selected="selected">Todos</option>
-						<option value="1">Titulo</option>
-						<option value="2">Autor</option>
-						<option value="3">Editora</option>
-						<option value="4">Área</option>
-						<option value="5">Assunto</option>
-					</select> <label for="idioma">Idioma</label> <select id="idioma"
-						class="form-control">
-						<option value="0" selected="selected">Todos</option>
-					<?php
-					
-					foreach ( $_SESSION ["lstIdiomas"] as $value ) {
-						echo "<option value=\"" . $value ["Codigo"] . "\">" . $value ["Nome"] . "</option>";
-					}
-					?>
-				</select>
+					<div class="col-xs-12 col-md-offset-1 col-md-4 col-sm-offset-1 col-sm-4 text-rigth">
+						<label for="tipo" class="lbl">Tipo: </label> 
+						<select id="tipo" class="form-control">
+							<option value="0" selected="selected">Todos</option>
+							<?php foreach ( $_SESSION ["lstTipoTitulo"] as $value ) {
+									echo "<option value=\"" . $value ["Codigo"] . "\">" . $value ["Nome"] . "</option>";
+							}?>
+						</select> 
+					</div>
+					<div class="col-xs-12 col-md-3 col-sm-3">	
+						<label for="campo" class="lbl">Campo: </label> 
+						<select id="campo" class="form-control">
+							<option value="0" selected="selected">Todos</option>
+							<option value="1">Titulo</option>
+							<option value="2">Autor</option>
+							<option value="3">Editora</option>
+							<option value="4">Área</option>
+							<option value="5">Assunto</option>
+						</select>
+					</div>
+					<div class="col-xs-12 col-md-3 col-sm-3 text-left"> 
+						<label for="idioma" class="lbl">Idioma: </label> 
+						<select id="idioma" class="form-control">
+							<option value="0" selected="selected">Todos</option>
+							<?php foreach ( $_SESSION ["lstIdiomas"] as $value ) {
+								echo "<option value=\"" . $value ["Codigo"] . "\">" . $value ["Nome"] . "</option>";
+							}?>
+						</select>
+					</div>
 				</div>
+				<div class="rowspace"></div>
 				<div class="row text-center">
-					<input minlength=3 required
-						onkeydown="if (event.keyCode == 13) {document.frm-pesquisa.submit(); return false;}"
-						class="form-control" placeholder="O que procura?" id="texto"
-						type="text">
-					<button type="submit" class="btn btn-default">Pesquisar</button>
+					<div class="col-xs-12 col-md-offset-3 col-md-5 col-sm-offset-2 col-sm-6 text-rigth"> 
+						<input minlength=3 required
+							onkeydown="if (event.keyCode == 13) {document.frm-pesquisa.submit(); return false;}"
+							class="form-control texto-pesquisa keyboardInput" placeholder="O que procura?" id="texto"
+							type="text">
+					</div>
+					<div class="col-xs-12 col-md-4 col-sm-3 btn-pesquisa"> 
+						<button type="submit" class="btn btn-default btn-pesquisa">Pesquisar</button>
+					</div> 
 				</div>
 			</form>
 		</div>
+		<div class="rowspace"></div>
+		<div class="rowspace"></div>
 		<div class="row impressao hide">
-			<div id="infobusca" class="alert alert-info text-center" role="alert"></div>
+			<div id="infobusca" class="alert alert-info" role="alert"></div>
 		</div>
-		<hr />
-
-		<div class="row paginacao">
+<!-- 		<hr /> -->
+		<div class="rowspace"></div>
+		<div class="row paginacao hidden">
 			<div class="col-xs-12 col-md-12 col-sm-12 text-center">
 				<nav aria-label="Page navigation">
 					<ul class="pagination" id="paginator">
@@ -98,9 +108,9 @@
 			</div>
 		</div>
 
-		<div class="row indices impressao">
-			<div class="col-xs-12 col-md-12 col-sm-12 text-center" id="indices"></div>
-		</div>
+<!-- 		<div class="row indices impressao"> -->
+<!-- 			<div class="col-xs-12 col-md-12 col-sm-12 text-center" id="indices"></div> -->
+<!-- 		</div> -->
 		<div class="row impressao" id="tabela">
 			<table id="datatable-result" class="table table-hover">
 				<thead>
@@ -521,7 +531,7 @@
 	 					}
 	 			  	},
 	 				success: function(listaJson){
-		 				console.log(listaJson);
+// 		 				console.log(listaJson);
 	 					var objJson = JSON.parse(listaJson);
 	 					var formPesquisa = JSON.parse(listaJson)["formularioPesquisa"];
 						var listArray = [];
@@ -574,7 +584,7 @@
 	 		        			var check = $(".checkAll");
  								check.prop("checked", false);
 	 		        		}
-		 		        		
+	 		        		$(".paginacao").removeClass("hidden");	
 	 					}else{
 	 						var linha = tabela.insertRow(0);
 	 						var coluna_unica = linha.insertCell(0);
@@ -587,14 +597,14 @@
 						
 	 					$("#bodyResult").fadeIn();
 	 		        	$(".progress").addClass("hidden");
-	 		        	$(".paginacao").removeClass("hidden");
+	 		        	
 	
-	 		        	var indices = document.getElementById("indices");
 	 		        	if (lastRegisterPage > totalRegistos) lastRegisterPage = totalRegistos;
-						indices.innerHTML = "Exibindo de " + firstRegisterPage + " a " + lastRegisterPage + " de " + totalRegistos + " acervos encontrados";
+	 		        	var lblIndices = "Exibindo de <b>" + firstRegisterPage + "</b> a <b>" + lastRegisterPage + "</b> de <b>" + totalRegistos + "</b> acervos encontrados";
 						novaPesquisa = false;
 
-						var filtros = "Busca por";
+						var filtros = "<div class=\"row linhamsg\">"
+										+"<div class=\"col-xs-12 col-md-6 col-sm-6 text-left linhamsgfrm\">Busca por";
 						if ((formPesquisa["texto"] != "") && (formPesquisa["texto"] != undefined) && (formPesquisa["texto"] != null))
 							filtros += " \"<b>" + formPesquisa["texto"] + "</b>\"";
 						if ((formPesquisa["idioma"] != "0") && (formPesquisa["idioma"] != undefined) && (formPesquisa["idioma"] != null))
@@ -605,6 +615,8 @@
 							filtros += " em todos os campos";
 						if ((formPesquisa["tipo"] != "0") && (formPesquisa["tipo"] != undefined) && (formPesquisa["tipo"] != null))
 							filtros += " do tipo \"<b>" + $("#tipo option[value='" + formPesquisa["tipo"] + "']").text() + "</b>\"";
+
+						filtros += "</div><div class=\"col-xs-12 col-md-6 col-sm-6 text-right\">" + lblIndices + "</div></div>";
 							
 						var info = document.getElementById("infobusca");
 						var pai = info.parentElement;

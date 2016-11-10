@@ -27,16 +27,6 @@
 		echo "Fail Requisition";
 	}
 	
-	
-	
-// 	$_SESSION["diretorio_completo"] = $_SERVER['DOCUMENT_ROOT']."/fasbam/arquivos/1";
-// 	$_SESSION["diretorio_parcial"] = "/fasbam/arquivos/1";
-// 	$_SESSION["arquivos"] = scandir($_SESSION["diretorio_completo"]); 
-// 	$_SESSION["total_arquivos"] = count($_SESSION["arquivos"]);
-// 	echo $_SESSION["diretorio"];
-// 	header("Location: /fasbam/views/modulo_imagem/fotos.php");
-	
-	
 	function tirarAcentosER($p_paramento){
 		$p_paramento = str_replace("á","a",$p_paramento);
 		$p_paramento = str_replace("à","a",$p_paramento);

@@ -7,8 +7,6 @@
 	href="/fasbam/resources/bootstrap-3.3.7-dist/css/bootstrap.min.css">
 <link rel="stylesheet"
 	href="/fasbam/resources/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css">
-<link rel="stylesheet"
-	href="/fasbam/resources/bootstrap-3.3.7-dist/css/equal-height-columns.css">
 <link rel="stylesheet" href="/fasbam/resources/css/style.css">
 <script src="/fasbam/resources/bootstrap-3.3.7-dist/js/jquery-3.1.1.min.js"></script>
 <script src="/fasbam/resources/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
@@ -38,6 +36,8 @@
 				</div>
 			</div>
 		</div>
+		<div class="rowspace"></div>
+		<div class="rowspace"></div>
 		<div class="row impressao" id="tabela">
 			<table id="datatable-result" class="table table-hover">
 				<thead>
