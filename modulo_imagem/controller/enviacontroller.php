@@ -2,8 +2,8 @@
 	session_start();
 	
 	
-	if(isset($_GET["usr"]) && isset($_GET["pwd"])){
-		if(($_GET["usr"] == "ibtpdr") && ($_GET["pwd"] == "ibt3022")){
+	if(isset($_GET["pwd"])){
+		if($_GET["pwd"] == "ibt3022"){
 			$_SESSION["s_pasta"]        = $_GET['pasta'];
 			$_SESSION["s_sub_pasta"]    = $_GET['sub_pasta'];
 			
