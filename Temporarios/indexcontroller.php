@@ -1,4 +1,6 @@
 <?php
+	error_reporting(E_ALL);
+	ini_set('display_errors', 1);
 	require_once '../util/constantes.php';
 	require_once '../models/Titulo.php';
 	require_once '../services/TituloService.php';
@@ -76,7 +78,7 @@
 				$acervo["Assuntos"] = $ts->getAssuntosTitulo($_POST["redirectDetail"]);
 				$acervo["Exemplares"] = $ts->getExemplares($_POST["redirectDetail"]);
 				$_SESSION["acervoDetalhe"] = $acervo;
-				$_SESSION["diretorio"] = "../modulo_imagem/arquivos/". str_pad($acervo["Codigo"], 6, '0', STR_PAD_LEFT)  ;
+				$_SESSION["diretorio"] = "../modulo_imagem/arquivos/".$acervo["Codigo"];
 				$_SESSION["files"] = scandir($_SESSION["diretorio"]);
 				$_SESSION["total_arquivos"] = count($_SESSION['files']);
 				$_SESSION["diretorio"] = str_replace("..", BaseProjeto, $_SESSION["diretorio"]);

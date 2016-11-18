@@ -1,7 +1,7 @@
 <?php 
 	require_once '../util/constantes.php';
 	session_start();
-	if (! isset($_SESSION ["minhaListaAcervo"])) header("location: nova-busca");?>
+	if (! isset($_SESSION ["minhaListaAcervo"])) header("location: ".BaseProjeto."/nova-busca");?>
 <!DOCTYPE html>
 <html lang="pt">
 <head>
@@ -422,7 +422,7 @@
 					$("#bodyResult").empty();
 			  	},
 				success: function(total){
-// 					console.log(total);
+ 					console.log(total);
 					totalRegistos = total;
 					totalPaginas = (Math.ceil(totalRegistos / 10));
 					if (lastRegisterPage > totalRegistos) lastRegisterPage = totalRegistos;
@@ -533,7 +533,7 @@
 	 					}
 	 			  	},
 	 				success: function(listaJson){
-// 		 				console.log(listaJson);
+ 		 				console.log(listaJson);
 	 					var objJson = JSON.parse(listaJson);
 	 					var formPesquisa = JSON.parse(listaJson)["formularioPesquisa"];
 						var listArray = [];
@@ -567,7 +567,7 @@
 	 										+ ((listArray[titulo][1]["Edicao"] != null ) ? " " + listArray[titulo][1]["Edicao"] + "ed." : "")
 	 										+ " " + listArray[titulo][1]["PublicacaoLocal"] + ": " + listArray[titulo][1]["NomeEditora"]
 	 										+ ", " + listArray[titulo][1]["PublicacaoData"]
-	 										+ ((listArray[titulo][1]["DescricaoFisica"] != null ) ? ". " + listArray[titulo][1]["DescricaoFisica"] + "p." : "") 
+	 										+ ". " + listArray[titulo][1]["DescricaoFisica"] + "p."
 	 										+ "<br> Número de Chamada: " + listArray[titulo][1]["NumeroChamada"];
 	 							coluna_detalhe.innerHTML = "<a href=\"javascript:void(0)\" onclick=\"redirectDetail(this);\" data-codigo=\"" + listArray[titulo][1]["Codigo"] + "\"><span class=\"glyphicon glyphicon-forward noimpression\" aria-hidden=\"true\"></span></a>";
 

@@ -1,43 +1,45 @@
-<?php session_start();?>
+<?php 
+	require_once '../util/constantes.php';
+	session_start();?>
 <!DOCTYPE html>
 <html lang="pt">
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
-	href="/fasbam/resources/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+	href="<?= BaseProjeto ?>/resources/bootstrap-3.3.7-dist/css/bootstrap.min.css">
 <link rel="stylesheet"
-	href="/fasbam/resources/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css">
-<link rel="stylesheet" href="/fasbam/resources/css/style.css">
+	href="<?= BaseProjeto ?>/resources/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="<?= BaseProjeto ?>/resources/css/style.css">
 <script
-	src="/fasbam/resources/bootstrap-3.3.7-dist/js/jquery-3.1.1.min.js"></script>
-<script src="/fasbam/resources/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+	src="<?= BaseProjeto ?>/resources/bootstrap-3.3.7-dist/js/jquery-3.1.1.min.js"></script>
+<script src="<?= BaseProjeto ?>/resources/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
 <script
-	src="/fasbam/resources/bootstrap-3.3.7-dist/js/bootstrap-waitingfor.js"></script>
+	src="<?= BaseProjeto ?>/resources/bootstrap-3.3.7-dist/js/bootstrap-waitingfor.js"></script>
 </head>
 <body>
 	<div class="container">
 		<div class="row">
 			<div class="col-xs-12 col-md-3 col-sm-3 vcenter text-center ">
-				<img src="/fasbam/resources/images/logo.png">
+				<img src="<?= BaseProjeto ?>/resources/images/logo.png">
 			</div>
 			<div class="col-xs-12 col-md-8 col-sm-8 vcenter">
 				<img class="bannerheader"
-					src="/fasbam/resources/images/cabecalho.jpg">
+					src="<?= BaseProjeto ?>/resources/images/cabecalho.jpg">
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-4">
 				<div class="btn-group btn-group-justified" role="group">
 					<div class="btn-group" role="group">
-						<a href="/fasbam/busca" class="btn btn-default" role="button"><span
+						<a href="<?= BaseProjeto ?>/busca" class="btn btn-default" role="button"><span
 							aria-hidden="true">&larr;</span> voltar</a>
 					</div>
 					<div class="btn-group" role="group">
-						<a href="/fasbam/nova-busca" class="btn btn-default" role="button"><span
+						<a href="<?= BaseProjeto ?>/nova-busca" class="btn btn-default" role="button"><span
 							class="glyphicon glyphicon-search"></span> nova busca</a>
 					</div>
 					<div class="btn-group" role="group">
-						<a href="/fasbam/minha-lista" class="btn btn-default"
+						<a href="<?= BaseProjeto ?>/minha-lista" class="btn btn-default"
 							role="button">minha lista <span aria-hidden="true">&rarr;</a>
 					</div>
 				</div>
@@ -70,7 +72,7 @@
 											<?php if ($_SESSION["files"][$_i] != '.' && $_SESSION["files"][$_i] != '..'){?>
 												<div class="item <?= ($_i == 2)? "active":null?>">
 													<img class="foto-livro"
-														src="<?= $_SESSION["diretorio"]?>/<?= $_SESSION["files"][$_i]?>"
+														src="<?= $_SESSION["diretorio"]?>/<?= $_SESSION["files"][$_i]?>?<?= time()?>"
 														alt="Titulo">
 												</div>
 											<?php }?>
@@ -78,7 +80,7 @@
 									<?php }else {?>
 										<div class="item active">
 											<img class="foto-livro"
-												src="/fasbam/resources/images/sem-foto.gif"
+												src="<?= BaseProjeto ?>/resources/images/sem-foto.gif"
 												alt="Sem foto">
 										</div>
 									<?php }?>
@@ -95,7 +97,7 @@
 									</a>
 								</div>
 							</div>
-							<!-- 							<img class="foto-livro" src="/fasbam/resources/images/sem-foto.gif"> -->
+							<!-- 							<img class="foto-livro" src="<?= BaseProjeto ?>/resources/images/sem-foto.gif"> -->
 						</div>
 						<table class="table table-hover">
 							<tr>
@@ -189,7 +191,7 @@
 								<br /> <?= $_SESSION["acervoDetalhe"]["NomeAutorPrincipal"]?>.
 								<b> <?= $_SESSION["acervoDetalhe"]["Titulo"]?><?= (($_SESSION["acervoDetalhe"]["SubTitulo"] != null) ? " - " . $_SESSION["acervoDetalhe"]["SubTitulo"] : "") ?></b>. 
 								<?= (($_SESSION["acervoDetalhe"]["Edicao"] != null) ? " " . $_SESSION["acervoDetalhe"]["Edicao"] . "ed." : "")?>
-								<?= $_SESSION["acervoDetalhe"]["PublicacaoLocal"] . ": " . $_SESSION["acervoDetalhe"]["NomeEditora"] . ", " . $_SESSION["acervoDetalhe"]["PublicacaoData"] . ". " . $_SESSION["acervoDetalhe"]["DescricaoFisica"] . "p."?>
+								<?= $_SESSION["acervoDetalhe"]["PublicacaoLocal"] . ": " . $_SESSION["acervoDetalhe"]["NomeEditora"] . ", " . $_SESSION["acervoDetalhe"]["PublicacaoData"] . (($_SESSION["acervoDetalhe"]["DescricaoFisica"] != null ) ? ". " . $_SESSION["acervoDetalhe"]["DescricaoFisica"] . "p." : "") ?>
 								
 							</div>
 							<div id="menu1" class="tab-pane fade">
@@ -236,13 +238,13 @@
 		<div class="col-xs-12 col-md-12 col-sm-12 text-center">
 			<a href="http://www.fasbam.edu.br/biblioteca/periodicos.php"
 				target="_blank"><img
-				src="/fasbam/resources/images/biblioteca-virtual.png"></a>
+				src="<?= BaseProjeto ?>/resources/images/biblioteca-virtual.png"></a>
 		</div>
 	</div>
 	<script type="text/javascript">
 	function novaBuscaComFiltro(element){
 		$.ajax({
-			url: "/fasbam/controller/titulocontroller.php", 
+			url: "<?= BaseProjeto ?>/controller/titulocontroller.php", 
 			async: false,
 			type: "POST",
 			data:{
@@ -250,7 +252,7 @@
 				texto: $(element).attr("data-nome")
 			},
 			success: function(success){
-				window.location.href = "/fasbam/busca";
+				window.location.href = "<?= BaseProjeto ?>/busca";
 	    	}
     	});
 	}

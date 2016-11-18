@@ -19,10 +19,33 @@ class TituloService {
 		$_titulos = array ();
 		
 		while ( $linha = $consulta->fetch_array ( MYSQLI_ASSOC ) ) {
-			$linha ["NomeAutorPrincipal"] = $this->getAutorPrincipal ( $linha ["Codigo"] ) ["Nome"];
-			$linha ["NomeTipoTitulo"] = $this->getTipoTitulo ( $linha ["CodigoTipoTitulo"] ) ["Nome"];
-			$linha ["NomeEditora"] = $this->getEditora ( $linha ["CodigoEditora"] ) ["Nome"];
-			$linha ["NomeIdioma"] = $this->getIdioma ( $linha ["CodigoIdioma"] ) ["Nome"];
+			
+// 			$var = $this->getAutorPrincipal($linha["Codigo"]);
+// 			$linha["NomeAutorPrincipal"] = $var["Nome"];
+// 			$var = $this->getTipoTitulo ( $linha ["CodigoTipoTitulo"] );
+// 			$linha["NomeTipoTitulo"] =  $var["Nome"];
+// 			$var = $this->getIdioma ( $linha ["CodigoIdioma"] );
+// 			$linha["NomeIdioma"] =  $var["Nome"];
+			if ($linha ["Codigo"] != null){
+				$var = $this->getAutorPrincipal($linha["Codigo"]);
+				$linha["NomeAutorPrincipal"] = $var["Nome"];
+			}else $linha["NomeAutorPrincipal"] = "";
+			
+			if ($linha ["CodigoTipoTitulo"] != null){
+				$var = $this->getAutorPrincipal($linha["CodigoTipoTitulo"]);
+				$linha["NomeTipoTitulo"] = $var["Nome"];
+			}else $linha["NomeTipoTitulo"] = "";
+			
+			if ($linha ["CodigoEditora"] != null){
+				$var = $this->getEditora ( $linha ["CodigoEditora"] );
+				$linha["NomeEditora"] =  $var["Nome"];
+			}else $linha["NomeEditora"] =  "";
+			
+			if ($linha ["CodigoIdioma"] != null){
+				$var = $this->getEditora ( $linha ["CodigoIdioma"] );
+				$linha["NomeIdioma"] =  $var["Nome"];
+			}else $linha["NomeIdioma"] =  "";
+			
 			array_push ( $_titulos, $linha );
 		}
 		$consulta->close ();

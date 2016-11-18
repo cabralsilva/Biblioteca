@@ -1,37 +1,39 @@
-<?php session_start();?>
+<?php  
+	require_once '../util/constantes.php';
+	session_start();?>
 <!DOCTYPE html>
 <html lang="pt">
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
-	href="/fasbam/resources/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+	href="<?= BaseProjeto ?>/resources/bootstrap-3.3.7-dist/css/bootstrap.min.css">
 <link rel="stylesheet"
-	href="/fasbam/resources/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css">
-<link rel="stylesheet" href="/fasbam/resources/css/style.css">
-<script src="/fasbam/resources/bootstrap-3.3.7-dist/js/jquery-3.1.1.min.js"></script>
-<script src="/fasbam/resources/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+	href="<?= BaseProjeto ?>/resources/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="<?= BaseProjeto ?>/resources/css/style.css">
+<script src="<?= BaseProjeto ?>/resources/bootstrap-3.3.7-dist/js/jquery-3.1.1.min.js"></script>
+<script src="<?= BaseProjeto ?>/resources/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 <script
-	src="/fasbam/resources/bootstrap-3.3.7-dist/js/bootstrap-waitingfor.js"></script>
+	src="<?= BaseProjeto ?>/resources/bootstrap-3.3.7-dist/js/bootstrap-waitingfor.js"></script>
 
 </head>
 <body>
 	<div class="container">
 		<div class="row">
 			<div class="col-xs-12 col-md-3 col-sm-3 vcenter text-center ">
-				<img src="/fasbam/resources/images/logo.png">
+				<img src="<?= BaseProjeto ?>/resources/images/logo.png">
 			</div>
 			<div class="col-xs-12 col-md-8 col-sm-8 vcenter">
-				<img class="bannerheader" src="/fasbam/resources/images/cabecalho.jpg">
+				<img class="bannerheader" src="<?= BaseProjeto ?>/resources/images/cabecalho.jpg">
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-4">
 				<div class="btn-group btn-group-justified" role="group">
 					<div class="btn-group" role="group">
-						<a href="/fasbam/busca" class="btn btn-default" role="button"><span aria-hidden="true">&larr;</span> voltar</a>
+						<a href="<?= BaseProjeto ?>/busca" class="btn btn-default" role="button"><span aria-hidden="true">&larr;</span> voltar</a>
 					</div>
 					<div class="btn-group" role="group">
-						<a href="/fasbam/nova-busca" class="btn btn-default" role="button"><span class="glyphicon glyphicon-search"></span> nova busca</a>
+						<a href="<?= BaseProjeto ?>/nova-busca" class="btn btn-default" role="button"><span class="glyphicon glyphicon-search"></span> nova busca</a>
 					</div>
 				</div>
 			</div>
@@ -68,7 +70,7 @@
 								<br/> <?= $acervos["NomeAutorPrincipal"]?>.
 								<b> <?= $acervos["Titulo"]?><?= (($acervos["SubTitulo"] != null) ? " - " . $acervos["SubTitulo"] : "") ?></b>. 
 								<?= (($acervos["Edicao"] != null) ? " " . $acervos["Edicao"] . "ed." : "") ?>
-								<?= $acervos["PublicacaoLocal"] . ": " . $acervos["NomeEditora"] . ", " . $acervos["PublicacaoData"] . ". " . $acervos["DescricaoFisica"] . "p."?>
+								<?= $acervos["PublicacaoLocal"] . ": " . $acervos["NomeEditora"] . ", " . $acervos["PublicacaoData"] . (($acervos["DescricaoFisica"] != null ) ? ". " . $acervos["DescricaoFisica"] . "p." : "")?>
 								<br/> Número de chamada: <?= $acervos["NumeroChamada"]?>
 							</td>
 							<td class="middle redirect">
@@ -87,14 +89,14 @@
 		<div class="footer">
 			<div class="col-xs-12 col-md-12 col-sm-12 text-center">
 				<a href="http://www.fasbam.edu.br/biblioteca/periodicos.php" target="_blank"><img
-					src="/fasbam/resources/images/biblioteca-virtual.png"></a>
+					src="<?= BaseProjeto ?>/resources/images/biblioteca-virtual.png"></a>
 			</div>
 		</div>
 	</div>
 	<script type="text/javascript">
 		function desmarcarLinha(parent, element){
 			$.ajax({
-				url: "/fasbam/controller/indexcontroller.php", 
+				url: "<?= BaseProjeto ?>/controller/indexcontroller.php", 
 				async: false,
 				type: "POST",
 				data:{
@@ -159,14 +161,14 @@
 
 		function redirectDetail(element){
 			$.ajax({
-				url: "/fasbam/controller/minhalistacontroller.php",
+				url: "<?= BaseProjeto ?>/controller/minhalistacontroller.php",
 				type: "POST",
 				async: false,
 				data:{
 					redirectDetail: $(element).attr("data-codigo")
 				},
 				success: function(retorno){
-					window.location.href = "/fasbam/detalhamento";
+					window.location.href = "<?= BaseProjeto ?>/detalhamento";
 		    	}
 	    	});
 		}

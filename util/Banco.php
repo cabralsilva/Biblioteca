@@ -3,7 +3,7 @@
 	define("NOME_BANCO", "ibolt_fasbam");
 	define("NOME_USUARIO", "ibolt_fasbam");
 	define("SENHA_BANCO", "bdfas@78");
-	define("HOST_BANCO", "186.202.152.57:3306");
+	define("HOST_BANCO", "186.202.152.57");
 	mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT); 
 	
 	class BancoDados{

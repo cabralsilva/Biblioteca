@@ -1,4 +1,13 @@
-<?php session_start();?>
+<?php 
+	session_start();
+	if (isset($_SESSION["hasaction"])){
+		if($_SESSION["hasaction"] == 0){
+			header("Location: ../controller/fotoscontroller.php");
+		}
+	}else 
+		header("Location: ../controller/fotoscontroller.php");
+	$_SESSION["hasaction"] = 0;
+?>
 <!DOCTYPE html>
 <html lang="pt">
 <head>
@@ -41,15 +50,19 @@
 				<ul id="sortable_banner" class="sortable">
 					<?php for ($_i=0; $_i<$_SESSION["total_arquivos"]; $_i++){?>
 						<?php if ($_SESSION["files"][$_i] != '.' && $_SESSION["files"][$_i] != '..'){?>
-							<li class="ui-state-default" id="<?=$_SESSION["files"][$_i]; ?>">
-						<img
-						src="<?= $_SESSION['s_caminho']?>/<?= $_SESSION["files"][$_i]?>?<?= time()?>">
-						<p></p> <a href="javascript:void(0)"
-						onclick="remove('../controller/removecontroller.php',{remove:'<?=$_SESSION["files"][$_i]?>'});">
-							<img class="remover" src='../resources/img/remover.png'
-							width="25px" height="25px" title="Excluir a Imagem" />
-					</a>
-					</li>
+						<li class="ui-state-default" id="<?=$_SESSION["files"][$_i]; ?>">
+							<div class="imglivro">
+								<img
+								src="<?= $_SESSION['s_caminho']?>/<?= $_SESSION["files"][$_i]?>?<?= time()?>">
+							</div>
+							<div class="imgremove">
+								<a href="#" class=""
+								onclick="remove('../controller/removecontroller.php',{remove:'<?=$_SESSION["files"][$_i]?>'});">
+									<img class="remover" src='../resources/img/remover.png'
+									width="25px" height="25px" title="Excluir a Imagem" />
+								</a>
+							</div>
+						</li>
 						<?php }?>
 					<?php }?>
 				</ul>
