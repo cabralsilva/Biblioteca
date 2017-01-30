@@ -49,7 +49,7 @@
 							<option value="1">Titulo</option>
 							<option value="2">Autor</option>
 							<option value="3">Editora</option>
-							<option value="4">Área</option>
+							<option value="4">Ã�rea</option>
 							<option value="5">Assunto</option>
 						</select>
 					</div>
@@ -102,7 +102,7 @@
 								<span aria-hidden="true">&raquo;</span>
 						</a></li>
 						<li onclick="changePage(this)" data-last="2" class="next disabled"
-							id="last-page"><a href="javascript:void(0)">Último <span
+							id="last-page"><a href="javascript:void(0)">Ãšltimo <span
 								aria-hidden="true">&rarr;</span></a></li>
 
 					</ul>
@@ -568,10 +568,10 @@
 	 										+ " " + listArray[titulo][1]["PublicacaoLocal"] + ": " + listArray[titulo][1]["NomeEditora"]
 	 										+ ", " + listArray[titulo][1]["PublicacaoData"]
 	 										+ ((listArray[titulo][1]["DescricaoFisica"] != null ) ? ". " + listArray[titulo][1]["DescricaoFisica"] + "p." : "") 
-	 										+ "<br> Número de Chamada: " + listArray[titulo][1]["NumeroChamada"];
+	 										+ "<br> NÃºmero de Chamada: " + listArray[titulo][1]["NumeroChamada"];
 	 							coluna_detalhe.innerHTML = "<a href=\"javascript:void(0)\" onclick=\"redirectDetail(this);\" data-codigo=\"" + listArray[titulo][1]["Codigo"] + "\"><span class=\"glyphicon glyphicon-forward noimpression\" aria-hidden=\"true\"></span></a>";
 
-								if (listArray[titulo][1]["marcado"] == true){//MARCAR OS QUE JÁ ESTÃO NA MINHA LISTA
+								if (listArray[titulo][1]["marcado"] == true){//MARCAR OS QUE JÃ� ESTÃƒO NA MINHA LISTA
 									var check = $("#" + listArray[titulo][1]["Codigo"]);
 	 								check.prop("checked", true);
 	 								var parent = check.parent().parent();
