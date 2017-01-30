@@ -32,7 +32,7 @@ class TituloService {
 			}else $linha["NomeAutorPrincipal"] = "";
 			
 			if ($linha ["CodigoTipoTitulo"] != null){
-				$var = $this->getAutorPrincipal($linha["CodigoTipoTitulo"]);
+				$var = $this->getTipoTitulo($linha["CodigoTipoTitulo"]);
 				$linha["NomeTipoTitulo"] = $var["Nome"];
 			}else $linha["NomeTipoTitulo"] = "";
 			
