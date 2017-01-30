@@ -152,11 +152,26 @@
 			html += "</body>";
 			html += "</html>";
 			
-		 	tela_impressao = window.open('Resultado_busca');
-            tela_impressao.document.write(html);
+// 		 	tela_impressao = window.open('Resultado_busca');
+//             tela_impressao.document.write(html);
             
-            tela_impressao.window.print();
-            tela_impressao.window.close();
+//             tela_impressao.window.print();
+//             tela_impressao.window.close();
+
+			 var blob = new Blob([html], { type: "text/html" });        
+	        var iFrame = document.createElement("iframe");
+	        
+	        iFrame.addEventListener("load", function () { 
+	            iFrame.contentWindow.focus();
+	            iFrame.contentWindow.print();
+	            window.setTimeout(function () {
+	                document.body.removeChild(iFrame);
+	                URL.revokeObjectURL(iFrame.src);
+	            }, 0);
+	        });        
+	        iFrame.style.display = "none";
+	        iFrame.src = URL.createObjectURL(blob);
+	        document.body.appendChild(iFrame);
 		}
 
 		function redirectDetail(element){

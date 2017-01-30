@@ -635,7 +635,9 @@
 			var conteudo = "";
 			var html = "<!DOCTYPE html>"
 						+ "<html lang=\"pt\">";
+			html += "<head>";
 			html += document.getElementsByTagName('head')[0].innerHTML;
+			html += "</head>";
 			html += "<body>";
 			
 			$(".impressao").each(function(){
@@ -651,14 +653,36 @@
 
 			conteudo = conteudohtml.outerHTML;			
 			html += conteudo;
+			html += "<script type='javascript'>" + 
+						"$(document).ready(function(){ " +
+						"	window.print(); " +
+						"})" + 
+					"<\/script>";
 			html += "</body>";
 			html += "</html>";
-			
-		 	tela_impressao = window.open('Resultado_busca');
-            tela_impressao.document.write(html);
-            
-            tela_impressao.window.print();
-            tela_impressao.window.close();
+// 			console.log(html);
+// 		 	var tela_impressao = window.open('Resultado_busca');
+// 		 	tela_impressao.document.write(html);
+// 		 	tela_impressao.window.print();
+// 		 	tela_impressao.window.close();
+
+
+
+		    var blob = new Blob([html], { type: "text/html" });        
+	        var iFrame = document.createElement("iframe");
+	        
+	        iFrame.addEventListener("load", function () { 
+	            iFrame.contentWindow.focus();
+	            iFrame.contentWindow.print();
+	            window.setTimeout(function () {
+	                document.body.removeChild(iFrame);
+	                URL.revokeObjectURL(iFrame.src);
+	            }, 0);
+	        });        
+	        iFrame.style.display = "none";
+	        iFrame.src = URL.createObjectURL(blob);
+	        document.body.appendChild(iFrame);
+		    
 		}
 
 		function redirectDetail(element){
