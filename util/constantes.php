@@ -1,3 +1,3 @@
 <?php
-	define("BaseProjeto", "/fasbam"); 
+	define("BaseProjeto", "http://localhost:8080/fasbam"); 
 ?>
