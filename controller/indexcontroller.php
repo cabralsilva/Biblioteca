@@ -1,4 +1,5 @@
 <?php
+// 	header('Access-Control-Allow-Origin: *');
 	require_once '../util/constantes.php';
 	require_once '../models/Titulo.php';
 	require_once '../services/TituloService.php';

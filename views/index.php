@@ -1,10 +1,12 @@
-<?php 
+<?php
+	//header('Access-Control-Allow-Origin: *');
 	require_once '../util/constantes.php';
 	session_start();
 	if (! isset($_SESSION ["minhaListaAcervo"])) header("location: nova-busca");?>
 <!DOCTYPE html>
 <html lang="pt">
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="<?= BaseProjeto ?>/resources/bootstrap-3.3.7-dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="<?= BaseProjeto ?>/resources/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css">
@@ -102,7 +104,7 @@
 								<span aria-hidden="true">&raquo;</span>
 						</a></li>
 						<li onclick="changePage(this)" data-last="2" class="next disabled"
-							id="last-page"><a href="javascript:void(0)">Ãšltimo <span
+							id="last-page"><a href="javascript:void(0)">Último <span
 								aria-hidden="true">&rarr;</span></a></li>
 
 					</ul>
@@ -568,7 +570,7 @@
 	 										+ " " + listArray[titulo][1]["PublicacaoLocal"] + ": " + listArray[titulo][1]["NomeEditora"]
 	 										+ ", " + listArray[titulo][1]["PublicacaoData"]
 	 										+ ((listArray[titulo][1]["DescricaoFisica"] != null ) ? ". " + listArray[titulo][1]["DescricaoFisica"] + "p." : "") 
-	 										+ "<br> NÃºmero de Chamada: " + listArray[titulo][1]["NumeroChamada"];
+	 										+ "<br> Número de Chamada: " + listArray[titulo][1]["NumeroChamada"];
 	 							coluna_detalhe.innerHTML = "<a href=\"javascript:void(0)\" onclick=\"redirectDetail(this);\" data-codigo=\"" + listArray[titulo][1]["Codigo"] + "\"><span class=\"glyphicon glyphicon-forward noimpression\" aria-hidden=\"true\"></span></a>";
 
 								if (listArray[titulo][1]["marcado"] == true){//MARCAR OS QUE JÃ� ESTÃƒO NA MINHA LISTA
