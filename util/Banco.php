@@ -2,7 +2,7 @@
 	define("MYSQL_CONN_ERROR", "Não foi possível conectar a base de dados."); 
 	define("NOME_BANCO", "ibolt_fasbam");
 	define("NOME_USUARIO", "ibolt_fasbam");
-	define("SENHA_BANCO", "bdfas@78");
+	define("SENHA_BANCO", "ib@017*");
 	define("HOST_BANCO", "186.202.152.57");
 	mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT); 
 	
