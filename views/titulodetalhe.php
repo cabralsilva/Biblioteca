@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
 	href="<?= BaseProjeto ?>/resources/bootstrap-3.3.7-dist/css/bootstrap.min.css">
@@ -224,7 +225,8 @@
 								</table>
 							</div>
 							<div id="menu2" class="tab-pane fade">
-								<p>Função de reserva em breve disponível</p>
+								<p>A reserva online está em manutenção.
+Para reservar ligue para (41) 3243-9800, ramal 22 ou envie um e-mail para biblioteca@fasbam.edu.br informando o código do livro que está na aba "Exemplares". </p>
 							</div>
 						</div>
 					</div>
